@@ -1,0 +1,2 @@
+# NorthGateWeb
+Web интерфейс системы
