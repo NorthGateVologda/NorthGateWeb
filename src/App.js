@@ -1,39 +1,88 @@
-import './App.css';
-import {Circle, MapContainer, TileLayer} from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
-import DraggableCircle from "./DraggableCircle";
-import axios from "axios";
-import {useState} from "react";
-
+import './styles/App.css'
+import React from 'react'
+import Map from './components/UI/Map/Map'
+import axios from 'axios'
+import { useState } from 'react'
+import PseudoRegistration from './components/PseudoRegistration'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import Button from 'react-bootstrap/Button'
+import {toast, Toaster} from "react-hot-toast";
 
 function App() {
-    const [center, setCenter] = useState([51.505, -0.09,])
-    const [position, setPosition] = useState(center);
-    const [radius, setRadius] = useState(1000)
+  const center = Object({ lat: 64.5430543214365, lng: 40.53628921508789})
+  const [position, setPosition] = useState(center)
+  const [radius, setRadius] = useState(1000)
+  const [name, setName] = useState('')
 
-    //тут ссылка на API (с портом)
-    axios.defaults.baseURL = 'http://localhost:3001/'
+  const sendData = async () => {
+    await toast.promise(
+        axios.post('https://89.208.199.85:8000/api/v1/object_tourism/', {
+            "center_lat": position.lat,
+            "center_lon": position.lng,
+            "radius": radius,
+            "username": name
+        }),
+        {
+            loading: 'Loading...',
+            success: 'Success',
+            error: 'Error!',
+        }
+    ).catch(function(error) {
+        console.log(error);
+    });
+  }
 
-    const sendData = async () => {
-                   //тут эндпоинт
-        await axios.post('/end-point', {position: position, radius: radius})
-    }
 
-    return (
-        <div>
-            <MapContainer center={center} zoom={13} scrollWheelZoom={false} style={{height: '900px'}}>
-                <TileLayer
-                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                />
-                <DraggableCircle position={position} setPosition={setPosition} radius={radius}/>
-            </MapContainer>
 
-            <button onClick={sendData}>
-                Send
-            </button>
-        </div>
-    );
+  return (
+    <>
+        <PseudoRegistration
+            setName={setName}
+            name={name}
+        />
+
+        <Map
+            center={center}
+            position={position}
+            radius={radius}
+            setPosition={setPosition}
+        />
+
+        <Button
+            variant="primary"
+            className="send-button"
+            onClick={sendData}
+        >
+            Send
+        </Button>
+
+        <Toaster
+            position="top-center"
+            reverseOrder={false}
+            gutter={8}
+            containerClassName=""
+            containerStyle={{}}
+            toastOptions={{
+                // Define default options
+                className: '',
+                duration: 3000,
+                style: {
+                    background: '#363636',
+                    color: '#fff',
+                },
+
+                // Default options for specific types
+                success: {
+                    duration: 3000,
+                    theme: {
+                        primary: 'green',
+                        secondary: 'black',
+                    },
+                },
+            }}
+        />
+    </>
+  )
 }
 
-export default App;
+export default App

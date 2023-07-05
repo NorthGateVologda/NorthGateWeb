@@ -1,12 +1,11 @@
-import {Circle, Marker, Popup, useMapEvents} from "react-leaflet";
-import {useCallback, useMemo, useRef, useState} from "react";
+import { Circle, useMapEvents } from "react-leaflet";
+import { useRef } from "react";
 
-function DraggableCircle({position, setPosition, radius}) {
-
+function CircleArea({position, setPosition, radius}) {
     const circleRef = useRef(null);
 
     useMapEvents({
-        mouseup(e) {
+        click(e) {
             const circle = circleRef.current;
             if (circle != null) {
                 setPosition(e.latlng);
@@ -23,4 +22,4 @@ function DraggableCircle({position, setPosition, radius}) {
     );
 }
 
-export default DraggableCircle;
+export default CircleArea;
