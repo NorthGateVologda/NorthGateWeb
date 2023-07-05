@@ -19,6 +19,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "start-ssl": "HTTPS=true SSL_CRT_FILE=/app/cert/server.crt SSL_KEY_FILE=/app/cert/server.key react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

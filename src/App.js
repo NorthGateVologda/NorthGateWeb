@@ -47,7 +47,6 @@ function App() {
             radius={radius}
             setPosition={setPosition}
         />
-
         <Button
             variant="primary"
             className="send-button"
@@ -63,7 +62,6 @@ function App() {
             containerClassName=""
             containerStyle={{}}
             toastOptions={{
-                // Define default options
                 className: '',
                 duration: 3000,
                 style: {
@@ -71,7 +69,6 @@ function App() {
                     color: '#fff',
                 },
 
-                // Default options for specific types
                 success: {
                     duration: 3000,
                     theme: {

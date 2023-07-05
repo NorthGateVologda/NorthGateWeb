@@ -2,8 +2,6 @@ import React from 'react';
 import { Modal, Button } from 'react-bootstrap'
 
 const BaseModal = ({children, header, conditional, show, setShow}) => {
-
-
     return (
         <Modal
             show={show}
