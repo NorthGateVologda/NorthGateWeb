@@ -5,7 +5,7 @@ function CircleArea({position, setPosition, radius}) {
     const circleRef = useRef(null);
 
     useMapEvents({
-        mouseup(e) {
+        click(e) {
             const circle = circleRef.current;
             if (circle != null) {
                 setPosition(e.latlng);

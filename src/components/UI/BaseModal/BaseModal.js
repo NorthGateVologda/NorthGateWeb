@@ -1,9 +1,7 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { Modal, Button } from 'react-bootstrap'
 
-const BaseModal = ({children, header, conditional}) => {
-    const [show, setShow] = useState(true)
-
+const BaseModal = ({children, header, conditional, show, setShow}) => {
     return (
         <Modal
             show={show}

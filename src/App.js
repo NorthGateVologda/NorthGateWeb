@@ -6,25 +6,33 @@ import { useState } from 'react'
 import PseudoRegistration from './components/PseudoRegistration'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Button from 'react-bootstrap/Button'
-import {ToastContainer} from "react-bootstrap";
-import AlertToast from "./components/UI/AlertToast/AlertToast";
+import {toast, Toaster} from "react-hot-toast";
 
 function App() {
-  const center = [64.5430543214365, 40.53628921508789]
+  const center = Object({ lat: 64.5430543214365, lng: 40.53628921508789})
   const [position, setPosition] = useState(center)
   const [radius, setRadius] = useState(1000)
   const [name, setName] = useState('')
-  const [toast, setToast] = useState(false)
 
   const sendData = async () => {
-    await axios.post('https://89.208.199.85:8000/api/v1/object_tourism/', {
-        "center_lat": position.lat,
-        "center_lon": position.lng,
-        "radius": radius,
-        "username": name
-    })
-    setToast(true)
+    await toast.promise(
+        axios.post('https://89.208.199.85:8000/api/v1/object_tourism/', {
+            "center_lat": position.lat,
+            "center_lon": position.lng,
+            "radius": radius,
+            "username": name
+        }),
+        {
+            loading: 'Loading...',
+            success: 'Success',
+            error: 'Error!',
+        }
+    ).catch(function(error) {
+        console.log(error);
+    });
   }
+
+
 
   return (
     <>
@@ -39,7 +47,6 @@ function App() {
             radius={radius}
             setPosition={setPosition}
         />
-
         <Button
             variant="primary"
             className="send-button"
@@ -48,9 +55,29 @@ function App() {
             Send
         </Button>
 
-        <ToastContainer position="bottom-end" className="p-3">
-            <AlertToast show={toast} setShow={setToast}/>
-        </ToastContainer>
+        <Toaster
+            position="top-center"
+            reverseOrder={false}
+            gutter={8}
+            containerClassName=""
+            containerStyle={{}}
+            toastOptions={{
+                className: '',
+                duration: 3000,
+                style: {
+                    background: '#363636',
+                    color: '#fff',
+                },
+
+                success: {
+                    duration: 3000,
+                    theme: {
+                        primary: 'green',
+                        secondary: 'black',
+                    },
+                },
+            }}
+        />
     </>
   )
 }

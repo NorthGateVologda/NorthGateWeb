@@ -1,15 +1,24 @@
-import React from 'react'
+import React, {useState} from 'react'
 import '../styles/App.css'
 import BaseModal from "./UI/BaseModal/BaseModal";
 import {Form} from "react-bootstrap";
 
 const PseudoRegistration = ({ setName, name }) => {
+    const [show, setShow] = useState(true)
+
   return (
     <BaseModal
         header="Зарегистрируйтесь, пожалуйста"
         conditional={() => name !== ""}
+        show={show}
+        setShow={setShow}
     >
-        <Form>
+        <Form
+            onSubmit={(e) => {
+                e.preventDefault()
+                setShow(false)
+            }}
+        >
             <Form.Group>
                 <Form.Label>
                     Введите имя
