@@ -26,7 +26,6 @@ const PseudoRegistration = ({ setName, name }) => {
 
                 <Form.Control
                     type="text"
-                    placeholder="Name"
                     autoFocus
                     value={name}
                     onChange={(e) => {

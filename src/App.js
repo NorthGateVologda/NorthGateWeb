@@ -16,7 +16,7 @@ function App() {
 
   const sendData = async () => {
     await toast.promise(
-        axios.post('https://89.208.199.85:8000/api/v1/object_tourism/', {
+        axios.post('https://api.northgatevologda.ru/api/v1/object_tourism/', {
             "center_lat": position.lat,
             "center_lon": position.lng,
             "radius": radius,
