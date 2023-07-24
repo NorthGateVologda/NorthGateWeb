@@ -1,7 +1,14 @@
-import { Circle, useMapEvents } from "react-leaflet";
-import { useRef } from "react";
+import {Circle, useMapEvents} from "react-leaflet";
+import {LatLng} from "leaflet";
+import {Dispatch, useRef} from "react";
 
-function CircleArea({position, setPosition, radius}) {
+type Props = {
+    position: LatLng,
+    setPosition: Dispatch<LatLng>,
+    radius: number
+};
+
+const CircleArea = ({position, setPosition, radius}: Props) => {
     const circleRef = useRef(null);
 
     useMapEvents({
@@ -20,6 +27,6 @@ function CircleArea({position, setPosition, radius}) {
             ref={circleRef}
         />
     );
-}
+};
 
 export default CircleArea;
