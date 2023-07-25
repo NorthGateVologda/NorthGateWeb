@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap'
 
-const BaseModal = ({children, header, conditional, show, setShow}) => {
+const BaseModal = ({children, header, show, setShow}) => {
     return (
         <Modal
             show={show}
@@ -15,19 +15,6 @@ const BaseModal = ({children, header, conditional, show, setShow}) => {
             <Modal.Body>
                 {children}
             </Modal.Body>
-
-            <Modal.Footer>
-                <Button
-                    variant="primary"
-                    onClick={() => {
-                        conditional()
-                            ? setShow(false)
-                            : setShow(true)
-                    }}
-                >
-                    Подтвердить
-                </Button>
-            </Modal.Footer>
         </Modal>
     );
 };

@@ -7,20 +7,21 @@ import PseudoRegistration from './components/PseudoRegistration'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Button from 'react-bootstrap/Button'
 import {toast, Toaster} from "react-hot-toast";
+import Auth from './components/Auth/Auth';
 
 function App() {
   const center = Object({ lat: 64.5430543214365, lng: 40.53628921508789})
   const [position, setPosition] = useState(center)
   const [radius, setRadius] = useState(1000)
   const [name, setName] = useState('')
+  const [password, setPassword] = useState('');
+  let data;
 
-  const sendData = async () => {
+  const registration = async () => {
     await toast.promise(
-        axios.post('https://api.northgatevologda.ru/api/v1/object_tourism/', {
-            "center_lat": position.lat,
-            "center_lon": position.lng,
-            "radius": radius,
-            "username": name
+        axios.post('https://api.northgatevologda.ru/api/user/registration/', {
+            "username": name,
+            "password": password
         }),
         {
             loading: 'Loading...',
@@ -36,24 +37,18 @@ function App() {
 
   return (
     <>
-        <PseudoRegistration
-            setName={setName}
+        <Auth 
             name={name}
+            setName={setName} 
+            password={password} 
+            setPassword={setPassword}
+            sendRequest={registration}
         />
 
         <Map
             center={center}
-            position={position}
-            radius={radius}
-            setPosition={setPosition}
+            data={data}
         />
-        <Button
-            variant="primary"
-            className="send-button"
-            onClick={sendData}
-        >
-            Send
-        </Button>
 
         <Toaster
             position="top-center"

@@ -1,10 +1,11 @@
 import React from 'react'
 import { MapContainer, TileLayer } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
+import GeoJson from '../GeoJson/GeoJson';
 import CircleArea from "../CircleArea/CircleArea";
 import classes from "./Map.module.css";
 
-const Map = ({center, position, radius, setPosition}) => {
+const Map = ({center, data}) => {
   return (
     <div className={classes.mapContainer}>
       {
@@ -18,11 +19,9 @@ const Map = ({center, position, radius, setPosition}) => {
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          <CircleArea
-            position={position}
-            setPosition={setPosition}
-            radius={radius}
-          />
+
+          <GeoJson data={data} />
+          
         </MapContainer>
       }
     </div>
