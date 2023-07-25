@@ -1,27 +1,37 @@
 import './styles/App.css'
 import React from 'react'
 import Map from './components/UI/Map/Map'
-import axios from 'axios'
-import { useState } from 'react'
-import PseudoRegistration from './components/PseudoRegistration'
+import { useState, useEffect } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import Button from 'react-bootstrap/Button'
 import {toast, Toaster} from "react-hot-toast";
+import Auth from './components/Auth/Auth';
+import Spinner from './components/UI/Spinner/Spinner';
+import {login, registration} from './api.auth';
+import {getCity} from './api.city';
 
 function App() {
-  const center = Object({ lat: 64.5430543214365, lng: 40.53628921508789})
-  const [position, setPosition] = useState(center)
-  const [radius, setRadius] = useState(1000)
-  const [name, setName] = useState('')
+  const center = Object({ lat: 64.5430543214365, lng: 40.53628921508789});
+  const [city, setCity] = useState('');
+  const [name, setName] = useState('');
+  const [password, setPassword] = useState('');
+  const [data, setData] = useState();
+  
+  useEffect(() => {
+    if(city === '')
+    {
+        return;
+    }
+    let res = getCity(city);
+    if (res !== undefined || res !== null)
+    {
+        setData(res);
 
-  const sendData = async () => {
-    await toast.promise(
-        axios.post('https://api.northgatevologda.ru/api/v1/object_tourism/', {
-            "center_lat": position.lat,
-            "center_lon": position.lng,
-            "radius": radius,
-            "username": name
-        }),
+    }
+  }, [city])
+
+  const reg = async () => {
+    return await toast.promise(
+        registration(name, password),
         {
             loading: 'Loading...',
             success: 'Success',
@@ -32,28 +42,37 @@ function App() {
     });
   }
 
-
+  const log = async () => {
+    return await toast.promise(
+        login(name, password),
+        {
+            loading: 'Loading...',
+            success: 'Success',
+            error: 'Error!',
+        }
+    ).catch(function(error) {
+        console.log(error);
+    });
+  }
 
   return (
     <>
-        <PseudoRegistration
-            setName={setName}
+        <Auth 
             name={name}
+            setName={setName} 
+            password={password} 
+            setPassword={setPassword}
+            registration={reg}
+            login={log}
+            
         />
+
+        <Spinner setCity={setCity}/>
 
         <Map
             center={center}
-            position={position}
-            radius={radius}
-            setPosition={setPosition}
+            data={data}
         />
-        <Button
-            variant="primary"
-            className="send-button"
-            onClick={sendData}
-        >
-            Send
-        </Button>
 
         <Toaster
             position="top-center"
