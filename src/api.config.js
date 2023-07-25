@@ -3,8 +3,9 @@ import axios from "axios";
 export const instance = axios.create({
   // к запросу будет прицепляться cookies
   withCredentials: true,
-  baseURL: "https://api.northgatevologda.ru",
+  baseURL: "http://api.northgatevologda.ru:8000",
 });
+
 
 
 // создаем перехватчик запросов
@@ -41,7 +42,7 @@ instance.interceptors.response.use(
         // запрос на обновление токенов
         const resp = await instance.get("/api/refresh");
         // сохраняем новый accessToken в localStorage
-        localStorage.setItem("token", resp.data.accessToken);
+        localStorage.setItem("token", resp.data.access);
         // переотправляем запрос с обновленным accessToken
         return instance.request(originalRequest);
       } catch (error) {

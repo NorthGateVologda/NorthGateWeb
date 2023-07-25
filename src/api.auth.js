@@ -1,17 +1,23 @@
 import { instance } from "./api.config.js";
 
 export const login = (name, password) => {
-    return instance.post("/api/user/login/", {name, password});
+    const res = instance.post("/api/user/login/", {name, password});
+    localStorage.setItem("token", res.data.access);
+    return res;
 }
     
 export const refreshToken = () => {
-    return instance.get("/api/user/token/refresh/");
+    const res = instance.get("/api/user/token/refresh/");
+    localStorage.setItem("token", res.data.access);
+    return res;
 }
     
 export const logout = () => {
-    return instance.post("/api/user/login/");
+    instance.post("/api/user/login/");
 }
 
 export const registration = (name, password) => {
-    return instance.post("/api/user/registration/", {name, password});
+    const res = instance.post("/api/user/registration/", {name, password});
+    localStorage.setItem("token", res.data.access);
+    return res;
 }
