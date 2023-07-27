@@ -2,7 +2,7 @@ import { instance } from "./api.config.js";
 
 export const login = async (username, password) => {
     const data = await instance.post("/api/user/login/", {username, password});
-    console.log(`status: `);
+    console.log(`status: ${data.status} ${data.statusText}`);
     localStorage.setItem("token", data.data.access);
     return data;
 }
@@ -18,8 +18,8 @@ export const logout = async () => {
 }
 
 export const registration = async (username, password) => {
-    const {data: {data}} = await instance.post("/api/user/registration/", {username, password});
-    console.log(data.token.access);
-    localStorage.setItem("token", data.token.access);
-    return data.token.access;
+    const data = await instance.post("/api/user/registration/", {username, password});
+    console.log(`status: ${data.status} ${data.statusText}`);
+    localStorage.setItem("token", data.data.data.token.access);
+    return data.data.data.token.access;
 }
