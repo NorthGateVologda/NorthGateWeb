@@ -19,14 +19,18 @@ function App() {
   useEffect(() => {
     if(city === '')
     {
+        setData(null);
         return;
     }
-    let res = getCity(city);
-    if (res !== undefined || res !== null)
-    {
-        setData(res);
 
-    }
+    getCity(city).then(res => {
+        if (res !== undefined || res !== null)
+        {
+            setData(res);
+        }
+    }).catch(error => {
+        console.log(error);
+    });
   }, [city])
 
   const reg = async () => {

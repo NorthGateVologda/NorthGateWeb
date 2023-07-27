@@ -1,5 +1,7 @@
 import { instance } from "./api.config.js";
 
-export const getCity = (city) => {
-    return instance.get("/api/get_residential_hexagons/", {city});
+export const getCity = async (city) => {
+    const {data} = await instance.get("/api/get_residential_hexagons/", {city});
+    console.log(data);
+    return data;
 }

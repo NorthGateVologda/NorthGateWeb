@@ -15,7 +15,7 @@ const GeoJson = ({data}) => {
 
     function style(feature) {
         return {
-            weight: 2,
+            weight: 1,
             opacity: 1,
             color: 'white',
             dashArray: '3',
@@ -24,10 +24,15 @@ const GeoJson = ({data}) => {
         };
     }
 
+    function refresh() {
+        return Math.random();
+    }
+
     return (
         <GeoJSON 
             data={data}
             style={style}
+            key={refresh()}
         />
     );
 }
