@@ -1,24 +1,25 @@
 import { instance } from "./api.config.js";
 
-export const login = (name, password) => {
-    const {data} = instance.post("/api/user/login/", {name, password});
-    localStorage.setItem("token", data.access);
+export const login = async (username, password) => {
+    const data = await instance.post("/api/user/login/", {username, password});
+    console.log(`status: ${data.status} ${data.statusText}`);
+    localStorage.setItem("token", data.data.access);
     return data;
 }
     
-export const refreshToken = () => {
-    const {data} = instance.get("/api/user/token/refresh/");
-    localStorage.setItem("token", data.access);
+export const refreshToken = async () => {
+    const {data: {data}} = await instance.get("/api/user/token/refresh/");
+    localStorage.setItem("token", data.token.access);
     return data;
 }
     
-export const logout = () => {
-    instance.post("/api/user/login/");
+export const logout = async () => {
+    await instance.post("/api/user/login/");
 }
 
-export const registration = (name, password) => {
-    const {data} = instance.post("/api/user/registration/", {name, password});
-    console.log(data);
-    localStorage.setItem("token", data.access);
-    return data;
+export const registration = async (username, password) => {
+    const data = await instance.post("/api/user/registration/", {username, password});
+    console.log(`status: ${data.status} ${data.statusText}`);
+    localStorage.setItem("token", data.data.data.token.access);
+    return data.data.data.token.access;
 }
