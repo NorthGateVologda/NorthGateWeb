@@ -12,7 +12,7 @@ export const instance = axios.create({
 // который к каждому запросу добавляет accessToken из localStorage
 instance.interceptors.request.use(
   (config) => {
-    config.headers.Authorization = `Bearer ${localStorage.getItem("token")}`
+    config.headers.Authorization = `JWT ${localStorage.getItem("token")}`
     return config
   }
 )
