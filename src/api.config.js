@@ -12,10 +12,8 @@ export const instance = axios.create({
 // который к каждому запросу добавляет accessToken из localStorage
 instance.interceptors.request.use(
   (config) => {
-    console.log(config.data);
     if (config?.data?.isAuthorize === false)
     {
-      console.log(config.data.isAuthorize);
       delete config.data.isAuthorize
       return config;
     }
