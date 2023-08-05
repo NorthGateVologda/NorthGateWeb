@@ -1,7 +1,9 @@
 import { instance } from "./api.config.js";
 
+const isAuthorize = false;
+
 export const login = async (username, password) => {
-    const data = await instance.post("/api/user/login/", {username, password});
+    const data = await instance.post("/api/user/login/", {username, password, isAuthorize});
     console.log(`status: ${data.status} ${data.statusText}`);
     localStorage.setItem("token", data.data.access);
     return data;
@@ -18,7 +20,7 @@ export const logout = async () => {
 }
 
 export const registration = async (username, password) => {
-    const data = await instance.post("/api/user/registration/", {username, password});
+    const data = await instance.post("/api/user/registration/", {username, password, isAuthorize});
     console.log(`status: ${data.status} ${data.statusText}`);
     localStorage.setItem("token", data.data.data.token.access);
     return data.data.data.token.access;

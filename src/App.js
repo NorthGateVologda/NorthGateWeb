@@ -45,7 +45,6 @@ function App() {
         }
     ).catch(function(error) {
         console.log(`status: ${error.response.status} ${error.response.statusText}`);
-
         if(error.response.data.data.username)
         {
             alert(`Ошибка! ${error.response.data.data.username}`);
