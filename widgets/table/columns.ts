@@ -1,20 +1,18 @@
 import {TableColumn} from "react-data-table-component";
-import {right} from "@popperjs/core";
 
 export interface DataRow {
     polygon_id: number;
     recommendation: string;
     nmb_of_parks: number;
     population: number;
-    polygon_comfort_rating: number;
+    rating: number;
     nmb_of_residential_bld: number;
     nmb_of_trnsp_inf_bld: number;
     max_population: number;
     nmb_of_soc_infr_bld: number;
-    max_polygon_comfort_rating: number;
+    max_rating: number;
     nmb_of_business_bld: number;
     nmb_of_tourism_bld: number;
-    availability_of_parks: number;
 };
 
 export const columns: TableColumn<DataRow>[] = [
@@ -52,24 +50,6 @@ export const columns: TableColumn<DataRow>[] = [
         sortable: true,
         width: '158px',
         reorder: true
-    },
-    {
-        name: "Обеспеченность парками",
-        selector: row => row.availability_of_parks,
-        sortable: true,
-        width: '200px',
-        reorder: true,
-        conditionalCellStyles: [
-            {
-                when: row => true,
-                style: (row: DataRow) => ({
-                    background: `linear-gradient(to right, transparent 0%, transparent 0%, rgb(255, 237, 160) 0%, rgb(255, 237, 160) ${row.availability_of_parks}%, transparent ${row.availability_of_parks}%, transparent 100%)`
-                })
-            },
-        ],
-        style: {
-            marginRight: '5px'
-        }
     },
     {
         name: "Количество жителей",
@@ -133,7 +113,7 @@ export const columns: TableColumn<DataRow>[] = [
     },
     {
         name: "Рейтинг комфортности полигона",
-        selector: (row) => row.polygon_comfort_rating,
+        selector: (row) => row.rating,
         sortable: true,
         width: '235px',
         reorder: true,
@@ -141,7 +121,7 @@ export const columns: TableColumn<DataRow>[] = [
             {
                 when: row => true,
                 style: (row: DataRow) => ({
-                    background: `linear-gradient(to right, transparent 0%, transparent 0%, rgb(84, 165, 32) 0%, rgb(84, 165, 32) ${(row.polygon_comfort_rating / row.max_polygon_comfort_rating) * 100}%, transparent ${(row.polygon_comfort_rating / row.max_polygon_comfort_rating) * 100}%, transparent 100%)`
+                    background: `linear-gradient(to right, transparent 0%, transparent 0%, rgb(84, 165, 32) 0%, rgb(84, 165, 32) ${(row.rating / row.max_rating) * 100}%, transparent ${(row.rating / row.max_rating) * 100}%, transparent 100%)`
                 })
             }
         ]

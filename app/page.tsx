@@ -13,22 +13,22 @@ export default function Home() {
         <main>
             <Authentication />
 
+            <Sidebar
+                city={city}
+                setCity={setCity}
+                setHouses={setHouses}
+            />
 
-                <Sidebar
-                    city={city}
-                    setCity={setCity}
-                    setHouses={setHouses}
-                />
-
+            <div className={classes.mainVertical}>
                 <InteractiveMap
                     city={city}
                     showHouses={houses}
                 />
 
-
-            <Table
-                city={city}
-            />
+                <Table
+                    city={city}
+                />
+            </div>
 
             <Toaster
                 position="top-center"

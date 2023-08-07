@@ -1,7 +1,6 @@
 import React from 'react';
 import {GeoJSON} from "react-leaflet";
 import {GeoJsonObject} from "geojson";
-import L, {Layer} from "leaflet";
 
 const Houses = ({data}: {data: GeoJsonObject}) => {
     const getColor = (d: string) => {
@@ -18,16 +17,14 @@ const Houses = ({data}: {data: GeoJsonObject}) => {
         <>
             <GeoJSON
                 data={data}
-                pointToLayer={(feature, latlng): Layer => {
-                    return L.circleMarker(latlng, {
-                        radius: 10,
-                        weight: 0.5,
-                        opacity: 1,
+                style={(feature) => {
+                    return {
+                        weight: 1,
+                        opacity: 0.5,
                         color: 'white',
                         dashArray: '3',
-                        fillOpacity: 0.3,
-                        fillColor: getColor(feature?.properties?.type)
-                    })
+                        fillOpacity: 0.6,
+                        fillColor: getColor(feature?.properties?.type)}
                 }}
             />
         </>

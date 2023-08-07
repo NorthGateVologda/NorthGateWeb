@@ -2,7 +2,6 @@ import React from 'react';
 import {GeoJSON,} from "react-leaflet";
 import {Props} from './type';
 import {LatLngExpression} from "leaflet";
-import classes from './index.module.css';
 
 
 const PopulationGrid = ({data}: Props) => {

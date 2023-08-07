@@ -1,4 +1,4 @@
-import React, {FormEvent} from 'react';
+import React from 'react';
 import {Button, Col, Form, InputGroup, Row} from "react-bootstrap";
 import formik from 'formik';
 import yup from 'yup';

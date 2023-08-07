@@ -5,12 +5,15 @@ import {columns, customStyles, DataRow} from "@/widgets/table/columns";
 import {getTableData} from "@/entities/table/api/tableApi";
 import Filter from "@/entities/table/ui/filter";
 import classes from './index.module.css';
+import {useTheme} from "@mui/material";
 
 const Table = ({city}: {city: string}) => {
-    const [data, setData] = useState<DataRow[]>([])
-    const [loading, setLoading] = useState<boolean>(false)
+    const [data, setData] = useState<DataRow[]>([]);
+    const [loading, setLoading] = useState<boolean>(false);
     const [filterPolygonId, setFilterPolygonId] = useState<number>(-1);
     const [resetPaginationToggle, setResetPaginationToggle] = useState<boolean>(false);
+
+    const theme= useTheme();
 
     useEffect(() => {
         setLoading(true);
@@ -32,8 +35,9 @@ const Table = ({city}: {city: string}) => {
     );
 
     return (
-        <div className={classes.table}>
+        <div className={classes.tableContainer}>
             <DataTable
+                className={classes.table}
                 title="Рекомендательный сервис размещения парков"
                 columns={columns}
                 data={filteredItems}
@@ -45,16 +49,16 @@ const Table = ({city}: {city: string}) => {
                 customStyles={customStyles}
                 subHeader
                 subHeaderComponent={
-                <Filter
-                    filterPolygonId={filterPolygonId}
-                    setFilterPolygonId={setFilterPolygonId}
-                    resetPaginationToggle={resetPaginationToggle}
-                    setResetPaginationToggle={setResetPaginationToggle}
-                />}
+                    <Filter
+                        filterPolygonId={filterPolygonId}
+                        setFilterPolygonId={setFilterPolygonId}
+                        resetPaginationToggle={resetPaginationToggle}
+                        setResetPaginationToggle={setResetPaginationToggle}
+                    />}
                 persistTableHead
                 responsive={true}
-                paginationPerPage={5}
-                paginationRowsPerPageOptions={[3, 5]}
+                paginationPerPage={20}
+                paginationRowsPerPageOptions={[20, 25]}
             />
         </div>
     );

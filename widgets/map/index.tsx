@@ -1,12 +1,11 @@
 "use client"
-import {GeoJSON, MapContainer, TileLayer, ZoomControl} from "react-leaflet";
+import {MapContainer, TileLayer, ZoomControl} from "react-leaflet";
 import 'leaflet/dist/leaflet.css'
 import classes from "./index.module.css";
 import {PopulationGrid} from "@/entities/map-layer/insex";
 import {getHouses, getPopulationGrid} from "@/entities/map-layer/api/geoJsonApi";
 import {GeoJsonObject} from "geojson";
 import React, {useEffect, useState} from "react";
-import {Point} from "leaflet";
 import {Houses} from "@/entities/map-layer/ui/houses/insex";
 
 

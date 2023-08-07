@@ -1,4 +1,4 @@
-import axios, {InternalAxiosRequestConfig} from "axios";
+import axios from "axios";
 
 export const instance = axios.create({
     // к запросу будет прицепляться cookies
