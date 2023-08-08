@@ -2,17 +2,17 @@ import {TableColumn} from "react-data-table-component";
 
 export interface DataRow {
     polygon_id: number;
-    recommendation: string;
+    recommendation: number;
     nmb_of_parks: number;
     population: number;
     rating: number;
     nmb_of_residential_bld: number;
     nmb_of_trnsp_inf_bld: number;
-    max_population: number;
     nmb_of_soc_infr_bld: number;
-    max_rating: number;
     nmb_of_business_bld: number;
     nmb_of_tourism_bld: number;
+    max_rating: number;
+    max_population: number;
 };
 
 export const columns: TableColumn<DataRow>[] = [
@@ -31,13 +31,13 @@ export const columns: TableColumn<DataRow>[] = [
         reorder: true,
         conditionalCellStyles: [
             {
-                when: row => row.recommendation === 'Да',
+                when: row => row.recommendation === 1,
                 style: () => ({
                     color: "rgb(84, 165, 32)"
                 })
             },
             {
-                when: row => row.recommendation === 'Нет',
+                when: row => row.recommendation === 0,
                 style: () => ({
                     color: "rgb(227, 26, 28)"
                 })

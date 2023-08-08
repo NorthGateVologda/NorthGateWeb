@@ -1,20 +1,38 @@
 "use client"
 import {Authentication, InteractiveMap, Sidebar} from "@/widgets";
 import {Toaster} from "react-hot-toast";
-import {useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import classes from './page.module.css';
 import {Table} from "@/widgets/table";
+import { getHexagons } from "@/entities/hexagons/api/hexagonsApi";
+import { DataRow } from "@/widgets/table/columns";
 
 export default function Home() {
     const [city, setCity] = useState<string>('');
     const [houses, setHouses] = useState<boolean>(false);
+    const [hexagons, setHexagons] = useState<DataRow[]>([]);
+    const [successfulAuth, setSuccessfulAuth] = useState<boolean>(false);
+    const cashedHexagons = useMemo(() => hexagons, [hexagons]);
+
+    useEffect(() => {
+     if (successfulAuth === true) {
+         console.log('Дёргаю')
+         getHexagons()
+             .then(res => {
+                  setHexagons(res);
+             });
+     }
+    }, [successfulAuth]);
 
     return (
         <main>
-            <Authentication />
+            <Authentication 
+                setSuccessfulAuth={setSuccessfulAuth}/>
 
             <Sidebar
                 city={city}
+                hexagons={cashedHexagons}
+                houses={houses}
                 setCity={setCity}
                 setHouses={setHouses}
             />
@@ -27,6 +45,7 @@ export default function Home() {
 
                 <Table
                     city={city}
+                    hexagons={cashedHexagons}
                 />
             </div>
 
