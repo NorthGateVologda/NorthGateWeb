@@ -35,7 +35,7 @@ const InteractiveMap = ({city, showHouses}: {city: string, showHouses: boolean})
             .then(res => {
                 setHouses(res);
             })
-    }, [showHouses]);
+    }, [city, showHouses]);
 
     return (
         <div className={classes.mapContainer}>

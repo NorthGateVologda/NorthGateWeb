@@ -2,15 +2,13 @@ import {TableColumn} from "react-data-table-component";
 
 export interface DataRow {
     polygon_id: number;
-    recommendation: string;
+    recommendation: number;
     nmb_of_parks: number;
     population: number;
     rating: number;
     nmb_of_residential_bld: number;
     nmb_of_trnsp_inf_bld: number;
-    max_population: number;
     nmb_of_soc_infr_bld: number;
-    max_rating: number;
     nmb_of_business_bld: number;
     nmb_of_tourism_bld: number;
 };
@@ -31,13 +29,13 @@ export const columns: TableColumn<DataRow>[] = [
         reorder: true,
         conditionalCellStyles: [
             {
-                when: row => row.recommendation === 'Да',
+                when: row => row.recommendation === 1,
                 style: () => ({
                     color: "rgb(84, 165, 32)"
                 })
             },
             {
-                when: row => row.recommendation === 'Нет',
+                when: row => row.recommendation === 0,
                 style: () => ({
                     color: "rgb(227, 26, 28)"
                 })
@@ -61,49 +59,49 @@ export const columns: TableColumn<DataRow>[] = [
             {
                 when: row => row.population <= 500,
                 style: (row: DataRow) => ({
-                    background: `linear-gradient(to right, transparent 0%, transparent 0%, rgb(255, 237, 160) 0%, rgb(255, 237, 160) ${(row.population / row.max_population) * 100}%, transparent ${(row.population / row.max_population) * 100}%, transparent 100%)`
+                    background: `linear-gradient(to right, transparent 0%, transparent 0%, rgb(255, 237, 160) 0%, rgb(255, 237, 160) ${(row.population / 10700) * 100}%, transparent ${(row.population / 10700) * 100}%, transparent 100%)`
                 })
             },
             {
                 when: row => row.population > 500,
                 style: (row: DataRow) => ({
-                    background: `linear-gradient(to right, transparent 0%, transparent 0%, rgb(254, 217, 118) 0%, rgb(254, 217, 118) ${(row.population / row.max_population) * 100}%, transparent ${(row.population / row.max_population) * 100}%, transparent 100%)`
+                    background: `linear-gradient(to right, transparent 0%, transparent 0%, rgb(254, 217, 118) 0%, rgb(254, 217, 118) ${(row.population / 10700) * 100}%, transparent ${(row.population / 10700) * 100}%, transparent 100%)`
                 })
             },
             {
                 when: row => row.population > 1000,
                 style: (row: DataRow) => ({
-                    background: `linear-gradient(to right, transparent 0%, transparent 0%, rgb(254, 178, 76) 0%, rgb(254, 178, 76) ${(row.population / row.max_population) * 100}%, transparent ${(row.population / row.max_population) * 100}%, transparent 100%)`
+                    background: `linear-gradient(to right, transparent 0%, transparent 0%, rgb(254, 178, 76) 0%, rgb(254, 178, 76) ${(row.population / 10700) * 100}%, transparent ${(row.population / 10700) * 100}%, transparent 100%)`
                 })
             },
             {
                 when: row => row.population > 2000,
                 style: (row: DataRow) => ({
-                    background: `linear-gradient(to right, transparent 0%, transparent 0%, rgb(253, 141, 60) 0%, rgb(253, 141, 60) ${(row.population / row.max_population) * 100}%, transparent ${(row.population / row.max_population) * 100}%, transparent 100%)`
+                    background: `linear-gradient(to right, transparent 0%, transparent 0%, rgb(253, 141, 60) 0%, rgb(253, 141, 60) ${(row.population / 10700) * 100}%, transparent ${(row.population / 10700) * 100}%, transparent 100%)`
                 })
             },
             {
                 when: row => row.population > 3000,
                 style: (row: DataRow) => ({
-                    background: `linear-gradient(to right, transparent 0%, transparent 0%, rgb(252, 78, 42) 0%, rgb(252, 78, 42) ${(row.population / row.max_population) * 100}%, transparent ${(row.population / row.max_population) * 100}%, transparent 100%)`
+                    background: `linear-gradient(to right, transparent 0%, transparent 0%, rgb(252, 78, 42) 0%, rgb(252, 78, 42) ${(row.population / 10700) * 100}%, transparent ${(row.population / 10700) * 100}%, transparent 100%)`
                 })
             },
             {
                 when: row => row.population > 4000 ,
                 style: (row: DataRow) => ({
-                    background: `linear-gradient(to right, transparent 0%, transparent 0%, rgb(227, 26, 28) 0%, rgb(227, 26, 28) ${(row.population / row.max_population) * 100}%, transparent ${(row.population / row.max_population) * 100}%, transparent 100%)`
+                    background: `linear-gradient(to right, transparent 0%, transparent 0%, rgb(227, 26, 28) 0%, rgb(227, 26, 28) ${(row.population / 10700) * 100}%, transparent ${(row.population / 10700) * 100}%, transparent 100%)`
                 })
             },
             {
                 when: row => row.population > 5000,
                 style: (row: DataRow) => ({
-                    background: `linear-gradient(to right, transparent 0%, transparent 0%, rgb(189, 0, 38) 0%, rgb(189, 0, 38) ${(row.population / row.max_population) * 100}%, transparent ${(row.population / row.max_population) * 100}%, transparent 100%)`
+                    background: `linear-gradient(to right, transparent 0%, transparent 0%, rgb(189, 0, 38) 0%, rgb(189, 0, 38) ${(row.population / 10700) * 100}%, transparent ${(row.population / 10700) * 100}%, transparent 100%)`
                 })
             },
             {
                 when: row => row.population > 8000,
                 style: (row: DataRow) => ({
-                    background: `linear-gradient(to right, transparent 0%, transparent 0%, rgb(128, 0, 38) 0%, rgb(128, 0, 38) ${(row.population / row.max_population) * 100}%, transparent ${(row.population / row.max_population) * 100}%, transparent 100%)`
+                    background: `linear-gradient(to right, transparent 0%, transparent 0%, rgb(128, 0, 38) 0%, rgb(128, 0, 38) ${(row.population / 10700) * 100}%, transparent ${(row.population / 10700) * 100}%, transparent 100%)`
                 })
             }
         ],
@@ -121,7 +119,7 @@ export const columns: TableColumn<DataRow>[] = [
             {
                 when: row => true,
                 style: (row: DataRow) => ({
-                    background: `linear-gradient(to right, transparent 0%, transparent 0%, rgb(84, 165, 32) 0%, rgb(84, 165, 32) ${(row.rating / row.max_rating) * 100}%, transparent ${(row.rating / row.max_rating) * 100}%, transparent 100%)`
+                    background: `linear-gradient(to right, transparent 0%, transparent 0%, rgb(84, 165, 32) 0%, rgb(84, 165, 32) ${(row.rating / 4) * 100}%, transparent ${(row.rating / 4) * 100}%, transparent 100%)`
                 })
             }
         ]

@@ -1,54 +1,34 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import classes from './index.module.css';
 import {Form} from "react-bootstrap";
-import {Divider, Drawer, IconButton, useTheme} from "@mui/material";
+import {Divider, Drawer, IconButton} from "@mui/material";
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import MenuIcon from '@mui/icons-material/Menu';
 import {Bar, BarChart, Legend, Tooltip, XAxis} from 'recharts';
-import {getRating} from "@/entities/diagram/api/ratingPolygonApi";
+import { DataRow } from '../table/columns';
+import CustomTooltip from '@/entities/sidebar/ui/tooltip';
 
-const Sidebar = ({city, setCity, setHouses}
-                     : {city: string, setCity: React.Dispatch<React.SetStateAction<string>>,
-                        setHouses: React.Dispatch<React.SetStateAction<boolean>>}) => {
+const Sidebar = ({
+    city,
+    hexagons,
+    houses,
+    setCity,
+    setHouses,
+}: {
+    city: string | undefined,
+    houses: boolean,
+    hexagons: DataRow[],
+    setCity: React.Dispatch<React.SetStateAction<string>>,
+    setHouses: React.Dispatch<React.SetStateAction<boolean>>,
+}) => {
     const [open, setOpen] = useState<boolean>(true);
-    const theme = useTheme();
+    const filteredHexagons = !city ? [] : hexagons.filter((item: {recommendation: number, rating: number}) => item.recommendation === 1 && item.rating !== 0);
+    const handleDrawerClose = () => setOpen(false);
+    const handleDrawerOpen = () => setOpen(true);
+    const diagramWidth = 300;
+    const diagramHeight = 300;
 
-    const handleDrawerClose = () => {
-        setOpen(false);
-    };
-
-    const handleDrawerOpen = () => {
-        setOpen(true);
-    };
-
-    const  [data, setData] = useState([])
-
-    useEffect(() => {
-        if (city === '' || city === undefined)
-        {
-            return;
-        }
-
-        getRating()
-            .then(res =>{
-                setData(res);
-        })
-            .catch(err => {
-                console.error(`Ошибка! ${err}`)
-            })
-    }, [city])
-
-    const CustomTooltip = ({ active, payload, label }: {active?: boolean, payload?: {length: number, 0: {value: number}}, label?: number}) => {
-        if (active && payload && payload.length) {
-            return (
-                <div className={classes.tooltip}>
-                    <p>ID парка: {label}</p>
-                    <p>Рейтинг: {payload[0].value}</p>
-                </div>
-            );
-        }
-        return null;
-    };
+    console.log(city)
 
     return (
         <div className={classes.sidebar}>
@@ -83,7 +63,7 @@ const Sidebar = ({city, setCity, setHouses}
                         <div>
                             <IconButton onClick={handleDrawerClose}>
                                 <ChevronLeftIcon />
-                                <div>North Gate</div>
+                                <div>Врата Севера</div>
                             </IconButton>
                         </div>
 
@@ -92,7 +72,7 @@ const Sidebar = ({city, setCity, setHouses}
                         <Form.Group className={classes.container}>
                             <Form.Label>Город</Form.Label>
                             <Form.Select
-                                defaultValue="Default"
+                                defaultValue={!city ? "Default" : city}
                                 className={classes.spinner}
                                 onChange={event => {
                                     setCity(event.target.value);
@@ -161,9 +141,9 @@ const Sidebar = ({city, setCity, setHouses}
                             <Form.Label>Объекты</Form.Label>
                             <Form.Check
                                 type="switch"
-
                                 label="Отобразить объекты"
-                                disabled={city === '' || city === undefined}
+                                disabled={!city}
+                                defaultChecked={houses}
                                 onChange={(event) => setHouses(event.target.checked)}
                             />
 
@@ -181,19 +161,19 @@ const Sidebar = ({city, setCity, setHouses}
                                     </div>
                                 </div>
                                 <div className={classes.color}>
-                                    <div className={classes.circle} style={{background: "#8AD554"}}/>
+                                    <div className={classes.circle} style={{background: "#FF8918"}}/>
                                     <div>
                                         - Объекты бизнеса
                                     </div>
                                 </div>
                                 <div className={classes.color}>
-                                    <div className={classes.circle} style={{background: "#FF3D64"}}/>
+                                    <div className={classes.circle} style={{background: "#18FFC1"}}/>
                                     <div>
                                         - Объекты туризма
                                     </div>
                                 </div>
                                 <div className={classes.color}>
-                                    <div className={classes.circle} style={{background: "#FF3D64"}}/>
+                                    <div className={classes.circle} style={{background: "#1860FF"}}/>
                                     <div>
                                         - Дом
                                     </div>
@@ -210,27 +190,31 @@ const Sidebar = ({city, setCity, setHouses}
                         <Divider />
 
                         <Form.Group className={classes.container}>
+                            {filteredHexagons.length <= 0 ? (
+                             <div>Выберите город для загрузки рейтинга</div>
+                            ) : null}
                             <BarChart
-                                width={300}
-                                height={300}
-                                data={data}
-                                margin={{
-                                    top: 5,
-                                    right: 30,
-                                    left: 20,
-                                    bottom: 5,
-                                }}>
-                                <XAxis
-                                    dataKey="polygon_id"
-                                    tick={{ fontSize: 10 }} />
-                                <Tooltip content={<CustomTooltip />}/>
-                                <Legend />
-                                <Bar
-                                    dataKey="rating"
-                                    name="Рейтинг парков"
-                                    fill="#1c666e"/>
-                            </BarChart>
-                            </Form.Group>
+                                 width={diagramWidth}
+                                 height={diagramHeight}
+                                 data={filteredHexagons}
+                                 margin={{
+                                     top: 5,
+                                     right: 30,
+                                     left: 20,
+                                     bottom: 5,
+                                 }}>
+                                 <XAxis
+                                     dataKey="polygon_id"
+                                     tick={{ fontSize: 10 }} />
+                                 <Tooltip 
+                                     content={<CustomTooltip />}/>
+                                 <Legend />
+                                 <Bar
+                                     dataKey="rating"
+                                     name="Рейтинг полигонов"
+                                     fill="#1c666e"/>
+                             </BarChart>
+                        </Form.Group>
                     </Drawer>
             }
         </div>
