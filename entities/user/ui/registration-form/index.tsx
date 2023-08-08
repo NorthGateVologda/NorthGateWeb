@@ -5,7 +5,12 @@ import {object, string} from "yup";
 import classes from './index.module.css';
 import {FormikHelpers} from "formik/dist/types";
 
-const RegistrationForm = ({onSubmit}: {onSubmit: (values: { username: string; password: string; }, formikHelpers: FormikHelpers<{ username: string; password: string; }>) => void | Promise<any>}) => {
+const RegistrationForm = ({onSubmit, setRegister, setLogin}
+    : {onSubmit: (values: { username: string; password: string; }, 
+                  formikHelpers: FormikHelpers<{ username: string; password: string; }>) => void | Promise<any>,
+       setRegister: React.Dispatch<React.SetStateAction<boolean>>,
+       setLogin: React.Dispatch<React.SetStateAction<boolean>>}) => {
+        
     const schema = object().shape({
         username: string().required(),
         password: string().required()
@@ -71,6 +76,10 @@ const RegistrationForm = ({onSubmit}: {onSubmit: (values: { username: string; pa
                         <Button
                             className={classes.button}
                             variant="secondary"
+                            onClick={() => {
+                                setLogin(true);
+                                setRegister(false);
+                            }}
                         >
                             Вход
                         </Button>

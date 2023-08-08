@@ -14,4 +14,4 @@ const CustomTooltip = ({ active, payload, label }: {active?: boolean, payload?: 
     return null;
 };
 
-export default CustomTooltip;
+export {CustomTooltip};

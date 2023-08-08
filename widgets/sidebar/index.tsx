@@ -1,3 +1,4 @@
+"use client"
 import React, {useState} from 'react';
 import classes from './index.module.css';
 import {Form} from "react-bootstrap";
@@ -6,23 +7,23 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import MenuIcon from '@mui/icons-material/Menu';
 import {Bar, BarChart, Legend, Tooltip, XAxis} from 'recharts';
 import { DataRow } from '../table/columns';
-import CustomTooltip from '@/entities/sidebar/ui/tooltip';
+import {CustomTooltip} from '@/entities/sidebar';
 
 const Sidebar = ({
-    city,
-    hexagons,
-    houses,
-    setCity,
-    setHouses,
-}: {
-    city: string | undefined,
-    houses: boolean,
-    hexagons: DataRow[],
-    setCity: React.Dispatch<React.SetStateAction<string>>,
-    setHouses: React.Dispatch<React.SetStateAction<boolean>>,
-}) => {
+        city,
+        hexagons,
+        houses,
+        setCity,
+        setHouses,
+    }: {
+        city: string | undefined,
+        houses: boolean,
+        hexagons: DataRow[],
+        setCity: React.Dispatch<React.SetStateAction<string>>,
+        setHouses: React.Dispatch<React.SetStateAction<boolean>>,
+    }) => {
     const [open, setOpen] = useState<boolean>(true);
-    const filteredHexagons = !city ? [] : hexagons.filter((item: {recommendation: number, rating: number}) => item.recommendation === 1 && item.rating !== 0);
+    const filteredHexagons = city === 'Default' ? [] : hexagons.filter((item: {recommendation: number, rating: number}) => item.recommendation === 1 && item.rating !== 0);
     const handleDrawerClose = () => setOpen(false);
     const handleDrawerOpen = () => setOpen(true);
     const diagramWidth = 300;
@@ -72,7 +73,7 @@ const Sidebar = ({
                         <Form.Group className={classes.container}>
                             <Form.Label>Город</Form.Label>
                             <Form.Select
-                                defaultValue={!city ? "Default" : city}
+                                value={city}
                                 className={classes.spinner}
                                 onChange={event => {
                                     setCity(event.target.value);

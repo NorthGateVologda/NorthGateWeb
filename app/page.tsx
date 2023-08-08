@@ -6,17 +6,17 @@ import classes from './page.module.css';
 import {Table} from "@/widgets/table";
 import { getHexagons } from "@/entities/hexagons/api/hexagonsApi";
 import { DataRow } from "@/widgets/table/columns";
+import {LogOut} from '@/entities/user';
 
 export default function Home() {
-    const [city, setCity] = useState<string>('');
+    const [city, setCity] = useState<string>('Default');
     const [houses, setHouses] = useState<boolean>(false);
     const [hexagons, setHexagons] = useState<DataRow[]>([]);
     const [successfulAuth, setSuccessfulAuth] = useState<boolean>(false);
     const cashedHexagons = useMemo(() => hexagons, [hexagons]);
 
     useEffect(() => {
-     if (successfulAuth === true) {
-         console.log('Дёргаю')
+     if (successfulAuth === true || city !== 'Default') {
          getHexagons()
              .then(res => {
                   setHexagons(res);
@@ -36,6 +36,8 @@ export default function Home() {
                 setCity={setCity}
                 setHouses={setHouses}
             />
+
+            <LogOut />
 
             <div className={classes.mainVertical}>
                 <InteractiveMap

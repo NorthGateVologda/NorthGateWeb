@@ -14,7 +14,7 @@ const InteractiveMap = ({city, showHouses}: {city: string, showHouses: boolean})
     const [houses, setHouses]: [population: GeoJsonObject, setPopulation: React.Dispatch<React.SetStateAction<GeoJsonObject>>] = useState({} as GeoJsonObject);
 
     useEffect(() => {
-        if (city === '' || city === undefined)
+        if (city === 'Default')
         {
             return;
         }
@@ -26,7 +26,7 @@ const InteractiveMap = ({city, showHouses}: {city: string, showHouses: boolean})
     }, [city]);
 
     useEffect(() => {
-        if (city === '' || city === undefined)
+        if (city === 'Default')
         {
             return;
         }

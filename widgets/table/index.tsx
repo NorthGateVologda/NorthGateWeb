@@ -14,8 +14,8 @@ const Table = ({
 }) => {
     const [filterPolygonId, setFilterPolygonId] = useState<number>(-1);
     const [resetPaginationToggle, setResetPaginationToggle] = useState<boolean>(false);
-    const filteredItems = !city ? [] : hexagons.filter(item => item.polygon_id && (filterPolygonId === -1 || item.polygon_id === filterPolygonId));
-    const hexagonsIds = !city ? [] : hexagons.map(item => item.polygon_id);
+    const filteredItems = city === 'Default' ? [] : hexagons.filter(item => item.polygon_id && (filterPolygonId === -1 || item.polygon_id === filterPolygonId));
+    const hexagonsIds = city === 'Default' ? [] : hexagons.map(item => item.polygon_id);
 
     return (
         <div className={classes.tableContainer}>

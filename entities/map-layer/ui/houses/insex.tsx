@@ -20,10 +20,10 @@ const Houses = ({data}: {data: GeoJsonObject}) => {
                 style={(feature) => {
                     return {
                         weight: 1,
-                        opacity: 0.5,
+                        opacity: 0,
                         color: 'white',
                         dashArray: '3',
-                        fillOpacity: 0.6,
+                        fillOpacity: 0.4,
                         fillColor: getColor(feature?.properties?.type)}
                 }}
             />

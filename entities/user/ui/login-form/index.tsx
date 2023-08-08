@@ -1,16 +1,19 @@
 import React from 'react';
 import {Button, Col, Form, InputGroup, Row} from "react-bootstrap";
-import formik from 'formik';
-import yup from 'yup';
+import {Formik} from 'formik';
+import {object, string} from "yup";
 import classes from "@/entities/user/ui/registration-form/index.module.css";
 import {FormikHelpers} from "formik/dist/types";
 
-const LoginForm = ({onSubmit}: {onSubmit: (values: { username: string; password: string; }, formikHelpers: FormikHelpers<{ username: string; password: string; }>) => void | Promise<any>}) => {
-    const { Formik } = formik;
+const LoginForm = ({onSubmit, setRegister, setLogin}
+    : {onSubmit: (values: { username: string; password: string; }, 
+                            formikHelpers: FormikHelpers<{ username: string; password: string; }>) => void | Promise<any>,
+       setRegister: React.Dispatch<React.SetStateAction<boolean>>,
+       setLogin: React.Dispatch<React.SetStateAction<boolean>>}) => {
 
-    const schema = yup.object().shape({
-        username: yup.string().required(),
-        password: yup.string().required()
+    const schema = object().shape({
+        username: string().required(),
+        password: string().required()
     });
 
     return (
@@ -25,10 +28,9 @@ const LoginForm = ({onSubmit}: {onSubmit: (values: { username: string; password:
             {({ handleSubmit, handleChange, values, touched, errors }) => (
                 <Form noValidate onSubmit={handleSubmit}>
                     <Row className="mb-3">
-                        <Form.Group as={Col} md="4" controlId="validationFormikUsername">
+                        <Form.Group controlId="validationFormikUsername">
                             <Form.Label>Имя</Form.Label>
                             <InputGroup hasValidation>
-                                <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
                                 <Form.Control
                                     type="text"
                                     placeholder=""
@@ -45,7 +47,7 @@ const LoginForm = ({onSubmit}: {onSubmit: (values: { username: string; password:
                         </Form.Group>
                     </Row>
                     <Row className="mb-3">
-                        <Form.Group as={Col} md="6" controlId="validationFormikPassword">
+                        <Form.Group controlId="validationFormikPassword">
                             <Form.Label>Пароль</Form.Label>
                             <Form.Control
                                 type="password"
@@ -72,6 +74,10 @@ const LoginForm = ({onSubmit}: {onSubmit: (values: { username: string; password:
                         <Button
                             className={classes.button}
                             variant="secondary"
+                            onClick={() => {
+                                setRegister(true);
+                                setLogin(false);
+                            }}
                         >
                             Регистрация
                         </Button>

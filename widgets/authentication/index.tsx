@@ -12,7 +12,7 @@ const Authentication = ({
 }: {
     setSuccessfulAuth: React.Dispatch<React.SetStateAction<boolean>>
 }) => {
-    const [showReg, setShowReg]: [showReg: boolean, setShowReg: React.Dispatch<React.SetStateAction<boolean>>] = useState(true);
+    const [showReg, setShowReg]: [showReg: boolean, setShowReg: React.Dispatch<React.SetStateAction<boolean>>] = useState(!localStorage.getItem("token"));
     const [showLog, setShowLog]: [showLog: boolean, setShowLog: React.Dispatch<React.SetStateAction<boolean>>] = useState(false);
 
     const registrationHandler = (values: {username: string, password: string}) => {
@@ -77,6 +77,8 @@ const Authentication = ({
             >
                 <RegistrationForm
                     onSubmit={registrationHandler}
+                    setLogin={setShowLog}
+                    setRegister={setShowReg}
                 />
             </BaseModal>
 
@@ -87,6 +89,8 @@ const Authentication = ({
             >
                 <LoginForm
                     onSubmit={loginHandler}
+                    setLogin={setShowLog}
+                    setRegister={setShowReg}
                 />
             </BaseModal>
         </>
