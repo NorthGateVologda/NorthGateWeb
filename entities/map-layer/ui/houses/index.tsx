@@ -8,9 +8,8 @@ const Houses = ({data}: {data: GeoJsonObject}) => {
             d === 'Объект транспортной инфраструктуры'  ? '#4DA2F1' :
                 d === 'Объекты бизнеса'  ? '#FF8918' :
                     d === 'Объекты туризма'  ? '#18FFC1' :
-                        d === 'Дом'  ? '#1860FF' :
-                            d === 'Парк'  ? '#8AD554' :
-                                    '#FFFFFF';
+                        d === 'Парк'  ? '#8AD554' :
+                                '#FFFFFF';
     }
 
     return (
@@ -20,10 +19,10 @@ const Houses = ({data}: {data: GeoJsonObject}) => {
                 style={(feature) => {
                     return {
                         weight: 1,
-                        opacity: 0.5,
+                        opacity: 0,
                         color: 'white',
                         dashArray: '3',
-                        fillOpacity: 0.6,
+                        fillOpacity: 0.4,
                         fillColor: getColor(feature?.properties?.type)}
                 }}
             />

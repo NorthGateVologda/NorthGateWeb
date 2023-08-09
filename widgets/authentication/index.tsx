@@ -8,13 +8,16 @@ import toast from "react-hot-toast";
 
 
 const Authentication = ({
-    setSuccessfulAuth
+    showReg,
+    setShowReg,
+    showLog,
+    setShowLog
 }: {
-    setSuccessfulAuth: React.Dispatch<React.SetStateAction<boolean>>
+    showReg: boolean,
+    setShowReg: React.Dispatch<React.SetStateAction<boolean>>,
+    showLog: boolean,
+    setShowLog: React.Dispatch<React.SetStateAction<boolean>>
 }) => {
-    const [showReg, setShowReg]: [showReg: boolean, setShowReg: React.Dispatch<React.SetStateAction<boolean>>] = useState(true);
-    const [showLog, setShowLog]: [showLog: boolean, setShowLog: React.Dispatch<React.SetStateAction<boolean>>] = useState(false);
-
     const registrationHandler = (values: {username: string, password: string}) => {
         toast.promise(
             registration(values.username, values.password),
@@ -28,7 +31,6 @@ const Authentication = ({
             {
                 setShowReg(false);
                 setShowLog(false);
-                setSuccessfulAuth(true);
             }
         }).catch(function(error) {
             console.debug(`status: ${error.response.status} ${error.response.statusText}`);
@@ -52,7 +54,6 @@ const Authentication = ({
             {
                 setShowLog(false);
                 setShowReg(false);
-                setSuccessfulAuth(true);
             }
         }).catch(function(error) {
             console.debug(`status: ${error.response.status} ${error.response.statusText}`);
@@ -77,16 +78,20 @@ const Authentication = ({
             >
                 <RegistrationForm
                     onSubmit={registrationHandler}
+                    setLogin={setShowLog}
+                    setRegister={setShowReg}
                 />
             </BaseModal>
 
             <BaseModal
                 show={showLog}
                 setShow={setShowLog}
-                header="Регистрация"
+                header="Вход"
             >
                 <LoginForm
                     onSubmit={loginHandler}
+                    setLogin={setShowLog}
+                    setRegister={setShowReg}
                 />
             </BaseModal>
         </>

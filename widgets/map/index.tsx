@@ -2,31 +2,23 @@
 import {MapContainer, TileLayer, ZoomControl} from "react-leaflet";
 import 'leaflet/dist/leaflet.css'
 import classes from "./index.module.css";
-import {PopulationGrid} from "@/entities/map-layer/insex";
+import {ObjectLegend, ParkGrid, PopulationGrid, PopulationLegend} from "@/entities/map-layer/index";
 import {getHouses, getPopulationGrid} from "@/entities/map-layer/api/geoJsonApi";
 import {GeoJsonObject} from "geojson";
 import React, {useEffect, useState} from "react";
-import {Houses} from "@/entities/map-layer/ui/houses/insex";
+import {Houses} from "@/entities/map-layer/ui/houses/index";
+import { DataRow } from "../table/columns";
 
 
-const InteractiveMap = ({city, showHouses}: {city: string, showHouses: boolean}) => {
-    const [population, setPopulation]: [population: GeoJsonObject, setPopulation: React.Dispatch<React.SetStateAction<GeoJsonObject>>] = useState({} as GeoJsonObject);
+const InteractiveMap = ({city, showHouses, population, layerType, hexagons, hexagonFilterId, setHexagonFilterId}
+                            : {city: string, showHouses: boolean, population: GeoJsonObject, layerType: boolean, hexagons: DataRow[], hexagonFilterId: number, setHexagonFilterId: React.Dispatch<React.SetStateAction<number>>}) => {
+
     const [houses, setHouses]: [population: GeoJsonObject, setPopulation: React.Dispatch<React.SetStateAction<GeoJsonObject>>] = useState({} as GeoJsonObject);
 
-    useEffect(() => {
-        if (city === '' || city === undefined)
-        {
-            return;
-        }
-
-        getPopulationGrid(city)
-            .then(res => {
-                setPopulation(res);
-            })
-    }, [city]);
+    useEffect(() => {console.log(hexagons);}, [hexagons])
 
     useEffect(() => {
-        if (city === '' || city === undefined)
+        if (city === 'Default')
         {
             return;
         }
@@ -56,10 +48,26 @@ const InteractiveMap = ({city, showHouses}: {city: string, showHouses: boolean})
                     position='topright'
                 />
 
+                <div className={classes.legends}>
+                    <PopulationLegend />
+                    <ObjectLegend />
+                </div>
+
                 {
-                    population?.type ?
+                    population?.type && !layerType ?
                         <PopulationGrid
                             data={population}
+                            hexagonFilterId={hexagonFilterId}
+                            setHexagonFilterId={setHexagonFilterId}
+                        />
+                        : <div/>
+                }
+
+                {
+                    population?.type && layerType ?
+                        <ParkGrid
+                            data={population}
+                            filter={hexagons}
                         />
                         : <div/>
                 }
