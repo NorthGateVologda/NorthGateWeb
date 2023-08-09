@@ -1,5 +1,5 @@
 "use client"
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import classes from './index.module.css';
 import {Form} from "react-bootstrap";
 import {Divider, Drawer, IconButton, Switch} from "@mui/material";
@@ -14,6 +14,7 @@ import {Buildings,
         RatingPolygonsEffect,
         RecommendPolygons} from '@/entities/diagrams';
 import { LogOut } from '@/entities/user';
+import {FilterTableDropdown} from '@/entities/sidebar/ui/filter-table-dropdown';
 
 const Sidebar = ({
         city,
@@ -23,7 +24,9 @@ const Sidebar = ({
         setHouses,
         setShowLog,
         layerType,
-        setLayerType
+        setLayerType,
+        hexagonFilterId,
+        setHexagonFilterId
     }: {
         city: string | undefined,
         houses: boolean,
@@ -32,10 +35,13 @@ const Sidebar = ({
         setHouses: React.Dispatch<React.SetStateAction<boolean>>,
         setShowLog: React.Dispatch<React.SetStateAction<boolean>>,
         layerType: boolean,
-        setLayerType: React.Dispatch<React.SetStateAction<boolean>>
+        setLayerType: React.Dispatch<React.SetStateAction<boolean>>,
+        hexagonFilterId: number,
+        setHexagonFilterId: React.Dispatch<React.SetStateAction<number>>
     }) => {
     const [open, setOpen] = useState<boolean>(true);
     const filteredHexagons = city === 'Default' ? [] : hexagons.filter((item: {recommendation: number, rating: number}) => item.recommendation === 1 && item.rating !== 0);
+    const hexagonsIds = city === 'Default' ? [] : hexagons.map(item => item.polygon_id);
     const handleDrawerClose = () => setOpen(false);
     const handleDrawerOpen = () => setOpen(true);
     const diagramWidth = 300;
@@ -117,9 +123,17 @@ const Sidebar = ({
                             </div>
                         </Form.Group>
 
+                        <Form.Group className={classes.containerCenter}>
+                            <FilterTableDropdown
+                                hexagonsIds={hexagonsIds}
+                                setHexagonFilterId={setHexagonFilterId}
+                                hexagonFilterId={hexagonFilterId}
+                            />
+                        </Form.Group>
+
                         <Divider variant="fullWidth" color='#AAAAAA'/>
 
-                        <Form.Group className={classes.containerCenter}>                          
+                        <Form.Group className={classes.containerCenter}>
                             <Population hexagons={hexagons}/>
                         </Form.Group>
 

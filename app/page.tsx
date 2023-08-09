@@ -71,6 +71,8 @@ export default function Home() {
                 setShowLog={setShowLog}
                 setLayerType={setLayerType}
                 layerType={layerType}
+                hexagonFilterId={hexagonFilterId}
+                setHexagonFilterId={setHexagonFilterId}
             />
 
             <div className={classes.mainVertical}>
