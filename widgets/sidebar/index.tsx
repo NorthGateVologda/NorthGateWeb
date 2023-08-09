@@ -1,7 +1,7 @@
 "use client"
 import React, {useMemo, useState} from 'react';
 import classes from './index.module.css';
-import {Form} from "react-bootstrap";
+import {Button, Form} from "react-bootstrap";
 import {Divider, Drawer, IconButton, Switch} from "@mui/material";
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -16,6 +16,8 @@ import {
 import {LogOut} from '@/entities/user';
 import {Props} from "./type"
 import {FilterTableDropdown} from '@/entities/sidebar/ui/filter-table-dropdown';
+import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
+import Info from "@/entities/sidebar/ui/info";
 
 const Sidebar = ({
                      city,
@@ -31,6 +33,7 @@ const Sidebar = ({
                      hexagonFilterId
                  }: Props) => {
     const [open, setOpen] = useState<boolean>(true);
+    const [showInfo, setShowInfo] = useState<boolean>(false);
     const filteredHexagons = city === 'Default' ? [] : hexagons.filter((item: {
         recommendation: number,
         rating: number
@@ -70,21 +73,28 @@ const Sidebar = ({
                         open={open}
                     >
                         <div className={classes.header}>
-                            <IconButton onClick={handleDrawerClose}>
-                                <ChevronLeftIcon/>
-                                <div>
+                            <div className={classes.containerBody}>
+                                <IconButton onClick={handleDrawerClose}>
+                                    <ChevronLeftIcon/>
                                     <div>
-                                        Врата Севера
+                                        <div>
+                                            Врата Севера
+                                        </div>
+                                        <div className={classes.headerSign}>
+                                            Система выбора парков
+                                        </div>
                                     </div>
-                                    <div className={classes.headerSign}>
-                                        Система выбора парков
-                                    </div>
-                                </div>
-                            </IconButton>
+                                </IconButton>
+
+                                <IconButton onClick={() => setShowInfo(true)}>
+                                    <QuestionMarkIcon/>
+                                </IconButton>
+                            </div>
 
                             <LogOut
                                 setShowLog={setShowLog}
                             />
+
                         </div>
 
                         <Divider variant="fullWidth" color='#AAAAAA'/>
@@ -113,65 +123,67 @@ const Sidebar = ({
                                     <Form.Label>Карта парков</Form.Label>
                                 </div>
                             </div>
-                        </Form.Group>
 
-                        <Form.Group className={classes.containerCenter}>
-                            <FilterTableDropdown
-                                hexagonsIds={hexagonsIds}
-                                setHexagonFilterId={setHexagonFilterId}
-                                hexagonFilterId={hexagonFilterId}
-                            />
-                        </Form.Group>
-
-                        <Divider variant="fullWidth" color='#AAAAAA'/>
-
-                        <Form.Group className={classes.container}>
-                            <div
-                                className={classes.containerBody}
-                            >
-                                <Form.Check
-                                    type="switch"
-                                    label="Отобразить объекты"
-                                    disabled={city === 'Default'}
-                                    defaultChecked={houses}
-                                    onChange={(event) => setHouses(event.target.checked)}
+                            <div className={classes.containerBody}>
+                                <FilterTableDropdown
+                                    hexagonsIds={hexagonsIds}
+                                    setHexagonFilterId={setHexagonFilterId}
+                                    hexagonFilterId={hexagonFilterId}
                                 />
+
+                                <div
+                                    className='align-self-end'
+                                >
+                                    <Form.Check
+                                        type="switch"
+                                        label="Отобразить объекты"
+                                        disabled={city === 'Default'}
+                                        defaultChecked={houses}
+                                        onChange={(event) => setHouses(event.target.checked)}
+                                    />
+                                </div>
                             </div>
                         </Form.Group>
 
                         <Divider variant="fullWidth" color='#AAAAAA'/>
+                        {city !== 'Default' ?
+                            <>
+                                <Form.Group className={classes.containerCenter}>
+                                    <Population hexagons={hexagons}/>
+                                </Form.Group>
 
-                        <Form.Group className={classes.containerCenter}>
-                            <Population hexagons={hexagons}/>
-                        </Form.Group>
+                                <Form.Group className={classes.container}>
+                                    <div className={classes.containerBody}>
+                                        <PopulationPolygonsEffect
+                                            hexagons={hexagons}
+                                            setHexagonFilterId={setHexagonFilterId}/>
 
-                        <Form.Group className={classes.container}>
-                            <div className={classes.containerBody}>
-                                <PopulationPolygonsEffect
-                                    hexagons={hexagons}
-                                    setHexagonFilterId={setHexagonFilterId}/>
+                                        <RatingPolygonsEffect
+                                            hexagons={hexagons}
+                                            setHexagonFilterId={setHexagonFilterId}/>
+                                    </div>
+                                </Form.Group>
 
-                                <RatingPolygonsEffect
-                                    hexagons={hexagons}
-                                    setHexagonFilterId={setHexagonFilterId}/>
-                            </div>
-                        </Form.Group>
+                                <Divider variant="fullWidth" color='#AAAAAA'/>
 
-                        <Divider variant="fullWidth" color='#AAAAAA'/>
+                                <Form.Group className={classes.container}>
+                                    <div className={classes.containerBody}>
+                                        <NumOfParks hexagons={hexagons}/>
 
-                        <Form.Group className={classes.container}>
-                            <div className={classes.containerBody}>
-                                <NumOfParks hexagons={hexagons}/>
+                                        <RecommendPolygons hexagons={hexagons}/>
+                                    </div>
+                                </Form.Group>
 
-                                <RecommendPolygons hexagons={hexagons}/>
-                            </div>
-                        </Form.Group>
-
-                        <Form.Group className={classes.containerCenter}>
-                            <Buildings hexagons={hexagons}/>
-                        </Form.Group>
+                                <Form.Group className={classes.containerCenter}>
+                                    <Buildings hexagons={hexagons}/>
+                                </Form.Group>
+                            </> :
+                            <div/>
+                        }
                     </Drawer>
             }
+
+            <Info show={showInfo} setShow={setShowInfo}/>
         </div>
     );
 };

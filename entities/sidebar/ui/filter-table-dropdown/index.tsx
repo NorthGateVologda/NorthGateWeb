@@ -43,9 +43,9 @@ const FilterTableDropdown = ({hexagonsIds, hexagonFilterId, setHexagonFilterId}:
     const hexagonId = parseInt(hexagonFilterId);
 
     return (
-        <ButtonGroup>
+        <>
             <Dropdown>
-                <Dropdown.Toggle style={{borderBottomRightRadius: '0', borderTopRightRadius: '0'}}>
+                <Dropdown.Toggle>
                     {hexagonId === -1 ? 'Все полигоны' : `Полигон ${hexagonFilterId}`}
                 </Dropdown.Toggle>
 
@@ -56,13 +56,7 @@ const FilterTableDropdown = ({hexagonsIds, hexagonFilterId, setHexagonFilterId}:
                     {hexagonsIds.map((val, i) => (<Dropdown.Item onClick={() => {setHexagonFilterId(val.toString())}} key={val} eventKey={val}>{val}</Dropdown.Item>))}
                 </Dropdown.Menu>
             </Dropdown>
-
-            <Button
-                variant='secondary'
-            >
-                Очистить
-            </Button>
-        </ButtonGroup>
+        </>
     );
 };
 

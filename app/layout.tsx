@@ -8,7 +8,8 @@ const font = Roboto({ subsets: ['latin'], weight: ["400"] })
 
 export const metadata: Metadata = {
   title: 'North Gate',
-  description: 'North Gate frontend application',
+  description: 'Врата севера, рекомендательный сервис размещения городских объектов',
+  icons: './favicon.ico'
 }
 
 export default function RootLayout({
