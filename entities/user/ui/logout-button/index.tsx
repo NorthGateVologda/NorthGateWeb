@@ -2,7 +2,6 @@
 import React from 'react';
 import {Button} from "react-bootstrap";
 import classes from './index.module.css';
-import Router from 'next/router'
 
 const LogOut = ({setShowLog}: {setShowLog: React.Dispatch<React.SetStateAction<boolean>>}) => {
     return(

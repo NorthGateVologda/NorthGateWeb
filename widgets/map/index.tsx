@@ -1,25 +1,30 @@
 "use client"
 import classes from "./index.module.css";
-import {ObjectLegend, ParkGrid, PopulationGrid, PopulationLegend} from "@/entities/map-layer/index";
-import {getHouses, getPopulationGrid} from "@/entities/map-layer/api/geoJsonApi";
+import {ObjectLegend, ParkGrid, PopulationGrid, PopulationLegend} from "@/entities/map-layer";
+import {getHouses} from "@/entities/map-layer/api/geoJsonApi";
 import {GeoJsonObject} from "geojson";
 import React, {useEffect, useState} from "react";
-import {Houses} from "@/entities/map-layer/ui/houses/index";
-import { DataRow } from "../table/columns";
+import {Houses} from "@/entities/map-layer/ui/houses";
+import {Props} from "@/widgets/map/type";
 import dynamic from "next/dynamic";
 
 const ZoomControl = dynamic(() => import("react-leaflet").then((module) => ({default: module.ZoomControl})), {loading: () => <p>loading...</p>, ssr: false});
 const TileLayer = dynamic(() => import("react-leaflet").then((module) => ({default: module.TileLayer})), {loading: () => <p>loading...</p>, ssr: false});
 const MapContainer = dynamic(() => import("react-leaflet").then((module) => ({default: module.MapContainer})), {loading: () => <p>loading...</p>, ssr: false});
 
-const InteractiveMap = ({city, showHouses, population, layerType, hexagons, hexagonFilterId, setHexagonFilterId}
-                            : {city: string, showHouses: boolean, population: GeoJsonObject, layerType: boolean, hexagons: DataRow[], hexagonFilterId: number, setHexagonFilterId: React.Dispatch<React.SetStateAction<number>>}) => {
-
+const InteractiveMap = ({
+                            city,
+                            showHouses,
+                            population,
+                            layerType,
+                            hexagons,
+                            hexagonFilterId,
+                            setHexagonFilterId,
+                        }: Props) => {
     const [houses, setHouses]: [population: GeoJsonObject, setPopulation: React.Dispatch<React.SetStateAction<GeoJsonObject>>] = useState({} as GeoJsonObject);
 
     useEffect(() => {
-        if (city === 'Default')
-        {
+        if (city === 'Default') {
             return;
         }
 
@@ -67,6 +72,8 @@ const InteractiveMap = ({city, showHouses, population, layerType, hexagons, hexa
                         <ParkGrid
                             data={population}
                             filter={hexagons}
+                            hexagonFilterId={hexagonFilterId}
+                            setHexagonFilterId={setHexagonFilterId}
                         />
                         : <div/>
                 }

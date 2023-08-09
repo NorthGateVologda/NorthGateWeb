@@ -89,7 +89,7 @@ export const columns: TableColumn<DataRow>[] = [
                 })
             },
             {
-                when: row => row.population > 4000 ,
+                when: row => row.population > 4000,
                 style: (row: DataRow) => ({
                     background: `linear-gradient(to right, transparent 0%, transparent 0%, rgb(227, 26, 28) 0%, rgb(227, 26, 28) ${(row.population / row.max_population) * 100}%, transparent ${(row.population / row.max_population) * 100}%, transparent 100%)`
                 })

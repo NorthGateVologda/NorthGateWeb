@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
-import { Dropdown } from 'react-bootstrap';
+import React, {useState} from 'react';
+import {Button, Dropdown} from 'react-bootstrap';
 import classes from './index.module.css';
-import { Button } from 'react-bootstrap';
 
 const Filer = ({
     hexagonsIds,

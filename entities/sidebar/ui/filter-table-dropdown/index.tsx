@@ -39,19 +39,21 @@ const CustomMenu = React.forwardRef(
 
 CustomMenu.displayName = 'CustomMenu';
 
-const FilterTableDropdown = ({hexagonsIds, hexagonFilterId, setHexagonFilterId}: {hexagonsIds: number[], hexagonFilterId: number, setHexagonFilterId: React.Dispatch<React.SetStateAction<number>>}) => {
+const FilterTableDropdown = ({hexagonsIds, hexagonFilterId, setHexagonFilterId}: {hexagonsIds: number[], hexagonFilterId: string, setHexagonFilterId: React.Dispatch<React.SetStateAction<string>>}) => {
+    const hexagonId = parseInt(hexagonFilterId);
+
     return (
         <ButtonGroup>
             <Dropdown>
                 <Dropdown.Toggle style={{borderBottomRightRadius: '0', borderTopRightRadius: '0'}}>
-                    {hexagonFilterId === -1 ? 'Все полигоны' : `Полигон ${hexagonFilterId}`}
+                    {hexagonId === -1 ? 'Все полигоны' : `Полигон ${hexagonFilterId}`}
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu
                     as={CustomMenu}
                     style={{ maxHeight: '200px', overflowY: 'scroll'}}
                 >
-                    {hexagonsIds.map((val, i) => (<Dropdown.Item onClick={() => {setHexagonFilterId(val)}} key={val} eventKey={val}>{val}</Dropdown.Item>))}
+                    {hexagonsIds.map((val, i) => (<Dropdown.Item onClick={() => {setHexagonFilterId(val.toString())}} key={val} eventKey={val}>{val}</Dropdown.Item>))}
                 </Dropdown.Menu>
             </Dropdown>
 
