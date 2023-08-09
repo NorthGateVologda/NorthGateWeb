@@ -1,5 +1,5 @@
 import React from 'react';
-import { DataRow } from '@/widgets/table/columns';
+import {DataRow} from '@/widgets/table/columns';
 import classes from './index.module.css'
 
 const Population = ({

@@ -22,7 +22,7 @@ const Houses = ({data}: {data: GeoJsonObject}) => {
                         opacity: 0,
                         color: 'white',
                         dashArray: '3',
-                        fillOpacity: 0.4,
+                        fillOpacity: 0.6,
                         fillColor: getColor(feature?.properties?.type)}
                 }}
             />

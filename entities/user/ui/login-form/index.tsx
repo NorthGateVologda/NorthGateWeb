@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Col, Form, InputGroup, Row} from "react-bootstrap";
+import {Button, Form, InputGroup, Row} from "react-bootstrap";
 import {Formik} from 'formik';
 import {object, string} from "yup";
 import classes from "@/entities/user/ui/registration-form/index.module.css";

@@ -1,5 +1,5 @@
 "use client"
-import React, {useState} from 'react';
+import React from 'react';
 import {BaseModal} from "@/shared/ui";
 import {RegistrationForm} from "@/entities/user/ui/registration-form";
 import {LoginForm} from "@/entities/user/ui/login-form";
@@ -8,17 +8,17 @@ import toast from "react-hot-toast";
 
 
 const Authentication = ({
-    showReg,
-    setShowReg,
-    showLog,
-    setShowLog
-}: {
+                            showReg,
+                            setShowReg,
+                            showLog,
+                            setShowLog
+                        }: {
     showReg: boolean,
     setShowReg: React.Dispatch<React.SetStateAction<boolean>>,
     showLog: boolean,
     setShowLog: React.Dispatch<React.SetStateAction<boolean>>
 }) => {
-    const registrationHandler = (values: {username: string, password: string}) => {
+    const registrationHandler = (values: { username: string, password: string }) => {
         toast.promise(
             registration(values.username, values.password),
             {
@@ -27,21 +27,20 @@ const Authentication = ({
                 error: 'Ошибка!',
             }
         ).then(res => {
-            if (res !== undefined)
-            {
+            if (res !== undefined) {
                 setShowReg(false);
                 setShowLog(false);
             }
-        }).catch(function(error) {
-            console.debug(`status: ${error.response.status} ${error.response.statusText}`);
-            if(error.response.data.data.username)
-            {
-                alert(`Ошибка! ${error.response.data.data.username}`);
+        }).catch(function (error) {
+            if (error && error?.response) {
+                if (error.response.data.data.username) {
+                    alert(`Ошибка! ${error.response.data.data.username}`);
+                }
             }
         });
     }
 
-    const loginHandler = (values: {username: string, password: string}) => {
+    const loginHandler = (values: { username: string, password: string }) => {
         toast.promise(
             login(values.username, values.password),
             {
@@ -50,24 +49,20 @@ const Authentication = ({
                 error: 'Ошибка!',
             }
         ).then(res => {
-            if (res !== undefined)
-            {
+            if (res !== undefined) {
                 setShowLog(false);
                 setShowReg(false);
             }
-        }).catch(function(error) {
-            console.debug(`status: ${error.response.status} ${error.response.statusText}`);
-            if(error.response.data.detail === 'No active account found with the given credentials')
-            {
-                alert(`Ошибка! Не верный логин или пароль`)
-            }
-            else if (error.response.data.detail)
-            {
-                alert(`Ошибка! ${error.response.data.detail}`)
+        }).catch(function (error) {
+            if (error && error?.response) {
+                if (error.response.data.detail === 'No active account found with the given credentials') {
+                    alert(`Ошибка! Не верный логин или пароль`)
+                } else if (error.response.data.detail) {
+                    alert(`Ошибка! ${error.response.data.detail}`)
+                }
             }
         });
     }
-
 
     return (
         <>

@@ -1,8 +1,10 @@
 import {GeoJsonObject} from "geojson";
 import React from "react";
+import {DataRow} from "@/widgets/table/columns";
 
 type Props = {
     data: GeoJsonObject,
+    filter: DataRow[],
     hexagonFilterId: string,
     setHexagonFilterId: React.Dispatch<React.SetStateAction<string>>
 };
