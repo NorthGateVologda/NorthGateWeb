@@ -58,7 +58,6 @@ instance.interceptors.response.use(
                 localStorage.setItem("token", resp.data.access);
                 localStorage.setItem("refresh", resp.data.refresh);
                 // переотправляем запрос с обновленным accessToken
-                console.log('Refreshed');
                 return instance.request(originalRequest);
             } catch (error) {
                 console.debug("AUTH ERROR");

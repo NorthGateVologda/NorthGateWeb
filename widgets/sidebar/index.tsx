@@ -41,8 +41,6 @@ const Sidebar = ({
     const diagramWidth = 300;
     const diagramHeight = 300;
 
-    console.log(city)
-
     return (
         <div className={classes.sidebar}>
             {

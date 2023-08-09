@@ -188,8 +188,7 @@ export const customStyles = {
             minHeight: '32px'
         },
         style: {
-            minHeight: '32px',
-            padding: "10px",
+            minHeight: '32px'
         }
     },
     pagination: {

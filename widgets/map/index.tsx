@@ -1,6 +1,4 @@
 "use client"
-import {MapContainer, TileLayer, ZoomControl} from "react-leaflet";
-import 'leaflet/dist/leaflet.css'
 import classes from "./index.module.css";
 import {ObjectLegend, ParkGrid, PopulationGrid, PopulationLegend} from "@/entities/map-layer/index";
 import {getHouses, getPopulationGrid} from "@/entities/map-layer/api/geoJsonApi";
@@ -8,14 +6,16 @@ import {GeoJsonObject} from "geojson";
 import React, {useEffect, useState} from "react";
 import {Houses} from "@/entities/map-layer/ui/houses/index";
 import { DataRow } from "../table/columns";
+import dynamic from "next/dynamic";
 
+const ZoomControl = dynamic(() => import("react-leaflet").then((module) => ({default: module.ZoomControl})), {loading: () => <p>loading...</p>, ssr: false});
+const TileLayer = dynamic(() => import("react-leaflet").then((module) => ({default: module.TileLayer})), {loading: () => <p>loading...</p>, ssr: false});
+const MapContainer = dynamic(() => import("react-leaflet").then((module) => ({default: module.MapContainer})), {loading: () => <p>loading...</p>, ssr: false});
 
 const InteractiveMap = ({city, showHouses, population, layerType, hexagons, hexagonFilterId, setHexagonFilterId}
                             : {city: string, showHouses: boolean, population: GeoJsonObject, layerType: boolean, hexagons: DataRow[], hexagonFilterId: number, setHexagonFilterId: React.Dispatch<React.SetStateAction<number>>}) => {
 
     const [houses, setHouses]: [population: GeoJsonObject, setPopulation: React.Dispatch<React.SetStateAction<GeoJsonObject>>] = useState({} as GeoJsonObject);
-
-    useEffect(() => {console.log(hexagons);}, [hexagons])
 
     useEffect(() => {
         if (city === 'Default')
@@ -28,7 +28,6 @@ const InteractiveMap = ({city, showHouses, population, layerType, hexagons, hexa
                 setHouses(res);
             })
     }, [city, showHouses]);
-
     return (
         <div className={classes.mapContainer}>
             <MapContainer
@@ -36,7 +35,7 @@ const InteractiveMap = ({city, showHouses, population, layerType, hexagons, hexa
                 zoom={13}
                 scrollWheelZoom={true}
                 zoomControl={false}
-                center={{ lat: 64.5430543214365, lng: 40.53628921508789}}
+                center={{lat: 64.5430543214365, lng: 40.53628921508789}}
             >
 
                 <TileLayer
@@ -49,8 +48,8 @@ const InteractiveMap = ({city, showHouses, population, layerType, hexagons, hexa
                 />
 
                 <div className={classes.legends}>
-                    <PopulationLegend />
-                    <ObjectLegend />
+                    <PopulationLegend/>
+                    <ObjectLegend/>
                 </div>
 
                 {

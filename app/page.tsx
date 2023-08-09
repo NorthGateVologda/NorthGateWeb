@@ -1,7 +1,7 @@
 "use client"
 import {Authentication, InteractiveMap, Sidebar} from "@/widgets";
 import {Toaster} from "react-hot-toast";
-import {useEffect, useMemo, useState} from "react";
+import {ComponentType, useEffect, useMemo, useState} from "react";
 import classes from './page.module.css';
 import {Table} from "@/widgets/table";
 import { getHexagons } from "@/entities/hexagons/api/hexagonsApi";
@@ -41,7 +41,6 @@ export default function Home() {
         getPopulationGrid(city)
             .then(res => {
                 setPopulation(res);
-                console.log(res);
             })
     }, [city]);
 
@@ -56,7 +55,7 @@ export default function Home() {
 
     return (
         <main>
-            <Authentication 
+            <Authentication
                 showLog={showLog}
                 setShowLog={setShowLog}
                 showReg={showReg}

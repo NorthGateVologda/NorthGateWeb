@@ -1,8 +1,10 @@
+"use client"
 import React from 'react';
-import {GeoJSON} from "react-leaflet";
 import {Props} from './type';
 import {LatLngExpression} from "leaflet";
+import dynamic from 'next/dynamic';
 
+const GeoJSON = dynamic(() => import("react-leaflet").then((module) => ({default: module.GeoJSON})), {loading: () => <p>loading...</p>, ssr: false});
 
 const PopulationGrid = ({data, hexagonFilterId, setHexagonFilterId}: Props) => {
     const getColor = (d: number, id: number) => {
@@ -29,7 +31,6 @@ const PopulationGrid = ({data, hexagonFilterId, setHexagonFilterId}: Props) => {
         const centerLat = totalLat / coordinates.length;
         return [centerLat, centerLng];
     };
-
     return (
         <>
             <GeoJSON
@@ -55,6 +56,7 @@ const PopulationGrid = ({data, hexagonFilterId, setHexagonFilterId}: Props) => {
             />
         </>
     );
+
 };
 
 export {PopulationGrid};

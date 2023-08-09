@@ -1,8 +1,11 @@
+"use client"
 import { DataRow } from '@/widgets/table/columns';
 import { GeoJsonObject } from 'geojson';
 import { LatLngExpression } from 'leaflet';
+import dynamic from 'next/dynamic';
 import React from 'react';
-import {GeoJSON} from "react-leaflet";
+
+const GeoJSON = dynamic(() => import("react-leaflet").then((module) => ({default: module.GeoJSON})), {loading: () => <p>loading...</p>, ssr: false});
 
 const ParkGrid = ({data, filter}: {data: GeoJsonObject, filter: DataRow[]}) => {
     return (
@@ -16,7 +19,8 @@ const ParkGrid = ({data, filter}: {data: GeoJsonObject, filter: DataRow[]}) => {
                         color: 'white',
                         dashArray: '3',
                         fillOpacity: 0.5,
-                        fillColor: 'green'}
+                        fillColor: 'green'
+                    }
                 }}
                 filter={(feature) => {
                     return !filter.find((value) => {
