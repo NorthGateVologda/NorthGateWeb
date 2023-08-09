@@ -6,6 +6,4 @@
 .mainVertical {
     display: flex;
     flex-direction: column;
-    height: fit-content;
-    max-height: 200vh;
 }

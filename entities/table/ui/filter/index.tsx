@@ -17,15 +17,18 @@ const Filer = ({
     setResetPaginationToggle: React.Dispatch<React.SetStateAction<boolean>>
 }) => {
     const [selectedOption, setSelectedOption] = useState<number>(-1);
+
     const handleOptionSelect = (option: number) => {
         setSelectedOption(option);
         setFilterPolygonId(option);
     };
+
     const handleClearSelection = () => {
         setResetPaginationToggle(!resetPaginationToggle);
         setFilterPolygonId(-1);
         setSelectedOption(-1);
     };
+
     const menuHeight = hexagonsIds.length > 5 ? '200px' : 'auto';
     
     return (

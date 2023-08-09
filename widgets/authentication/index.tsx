@@ -8,13 +8,18 @@ import toast from "react-hot-toast";
 
 
 const Authentication = ({
-    setSuccessfulAuth
+    setSuccessfulAuth,
+    showReg,
+    setShowReg,
+    showLog,
+    setShowLog
 }: {
-    setSuccessfulAuth: React.Dispatch<React.SetStateAction<boolean>>
+    setSuccessfulAuth: React.Dispatch<React.SetStateAction<boolean>>,
+    showReg: boolean,
+    setShowReg: React.Dispatch<React.SetStateAction<boolean>>,
+    showLog: boolean,
+    setShowLog: React.Dispatch<React.SetStateAction<boolean>>
 }) => {
-    const [showReg, setShowReg]: [showReg: boolean, setShowReg: React.Dispatch<React.SetStateAction<boolean>>] = useState(!localStorage.getItem("token"));
-    const [showLog, setShowLog]: [showLog: boolean, setShowLog: React.Dispatch<React.SetStateAction<boolean>>] = useState(false);
-
     const registrationHandler = (values: {username: string, password: string}) => {
         toast.promise(
             registration(values.username, values.password),
@@ -85,7 +90,7 @@ const Authentication = ({
             <BaseModal
                 show={showLog}
                 setShow={setShowLog}
-                header="Регистрация"
+                header="Вход"
             >
                 <LoginForm
                     onSubmit={loginHandler}

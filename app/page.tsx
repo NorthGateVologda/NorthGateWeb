@@ -7,13 +7,34 @@ import {Table} from "@/widgets/table";
 import { getHexagons } from "@/entities/hexagons/api/hexagonsApi";
 import { DataRow } from "@/widgets/table/columns";
 import {LogOut} from '@/entities/user';
+import {GeoJsonObject} from "geojson";
+import { getPopulationGrid } from "@/entities/map-layer/api/geoJsonApi";
 
 export default function Home() {
     const [city, setCity] = useState<string>('Default');
     const [houses, setHouses] = useState<boolean>(false);
     const [hexagons, setHexagons] = useState<DataRow[]>([]);
     const [successfulAuth, setSuccessfulAuth] = useState<boolean>(false);
+    const [showReg, setShowReg] = useState<boolean>(!localStorage.getItem("token"));
+    const [showLog, setShowLog] = useState<boolean>(false);
+    const [population, setPopulation] = useState<GeoJsonObject>({} as GeoJsonObject);
+    const [layerType, setLayerType] = useState<boolean>(false);
+
     const cashedHexagons = useMemo(() => hexagons, [hexagons]);
+    const cashedPopulation = useMemo(() => population, [population]);
+
+    useEffect(() => {
+        if (city === 'Default')
+        {
+            return;
+        }
+
+        getPopulationGrid(city)
+            .then(res => {
+                setPopulation(res);
+                console.log(res);
+            })
+    }, [city]);
 
     useEffect(() => {
      if (successfulAuth === true || city !== 'Default') {
@@ -27,7 +48,12 @@ export default function Home() {
     return (
         <main>
             <Authentication 
-                setSuccessfulAuth={setSuccessfulAuth}/>
+                setSuccessfulAuth={setSuccessfulAuth}
+                showLog={showLog}
+                setShowLog={setShowLog}
+                showReg={showReg}
+                setShowReg={setShowReg}
+            />
 
             <Sidebar
                 city={city}
@@ -35,14 +61,18 @@ export default function Home() {
                 houses={houses}
                 setCity={setCity}
                 setHouses={setHouses}
+                setShowLog={setShowLog}
+                setLayerType={setLayerType}
+                layerType={layerType}
             />
-
-            <LogOut />
 
             <div className={classes.mainVertical}>
                 <InteractiveMap
                     city={city}
+                    population={population}
+                    layerType={layerType}
                     showHouses={houses}
+                    hexagons={hexagons}
                 />
 
                 <Table

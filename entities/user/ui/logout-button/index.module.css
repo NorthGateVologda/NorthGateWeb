@@ -1,6 +1,4 @@
 .logout {
-    position: absolute;
-    right: 60px;
-    top: 10px;
-    z-index: 1000;
+    display: flex;
+    height: fit-content;
 }

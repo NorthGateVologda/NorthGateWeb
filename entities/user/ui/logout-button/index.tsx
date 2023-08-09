@@ -4,14 +4,14 @@ import {Button} from "react-bootstrap";
 import classes from './index.module.css';
 import Router from 'next/router'
 
-const LogOut = () => {
+const LogOut = ({setShowLog}: {setShowLog: React.Dispatch<React.SetStateAction<boolean>>}) => {
     return(
         <Button
             className={classes.logout}
             variant='secondary'
             onClick={() => {
                 localStorage.setItem("token", '');
-                Router.reload();
+                setShowLog(true);
             }}
         >
             Выйти
