@@ -10,8 +10,8 @@ import {Houses} from "@/entities/map-layer/ui/houses/index";
 import { DataRow } from "../table/columns";
 
 
-const InteractiveMap = ({city, showHouses, population, layerType, hexagons}
-                            : {city: string, showHouses: boolean, population: GeoJsonObject, layerType: boolean, hexagons: DataRow[]}) => {
+const InteractiveMap = ({city, showHouses, population, layerType, hexagons, hexagonFilterId, setHexagonFilterId}
+                            : {city: string, showHouses: boolean, population: GeoJsonObject, layerType: boolean, hexagons: DataRow[], hexagonFilterId: number, setHexagonFilterId: React.Dispatch<React.SetStateAction<number>>}) => {
 
     const [houses, setHouses]: [population: GeoJsonObject, setPopulation: React.Dispatch<React.SetStateAction<GeoJsonObject>>] = useState({} as GeoJsonObject);
 
@@ -57,6 +57,8 @@ const InteractiveMap = ({city, showHouses, population, layerType, hexagons}
                     population?.type && !layerType ?
                         <PopulationGrid
                             data={population}
+                            hexagonFilterId={hexagonFilterId}
+                            setHexagonFilterId={setHexagonFilterId}
                         />
                         : <div/>
                 }

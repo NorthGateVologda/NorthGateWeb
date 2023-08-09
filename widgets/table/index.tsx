@@ -1,6 +1,6 @@
 "use client"
 import React, {useState} from 'react';
-import DataTable from "react-data-table-component";
+import DataTable, {TableColumn} from "react-data-table-component";
 import {columns, customStyles, DataRow} from "@/widgets/table/columns";
 import Filter from "@/entities/table/ui/filter";
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
@@ -10,17 +10,33 @@ import { IconButton } from '@mui/material';
 
 const Table = ({
     city, 
-    hexagons
+    hexagons,
+    hexagonFilterId,
+    setHexagonFilterId
 }: {
     city: string | undefined, 
-    hexagons: DataRow[]
+    hexagons: DataRow[],
+    hexagonFilterId: number,
+    setHexagonFilterId: React.Dispatch<React.SetStateAction<number>>
 }) => {
     const [filterPolygonId, setFilterPolygonId] = useState<number>(-1);
     const [resetPaginationToggle, setResetPaginationToggle] = useState<boolean>(false);
     const [open, setOpen] = useState<boolean>(false);
-
     const filteredItems = city === 'Default' ? [] : hexagons.filter(item => item.polygon_id && (filterPolygonId === -1 || item.polygon_id === filterPolygonId));
     const hexagonsIds = city === 'Default' ? [] : hexagons.map(item => item.polygon_id);
+
+    const getStyleRow = [
+        {
+            when: (row: DataRow) => row.polygon_id === hexagonFilterId,
+                        style: {
+                                backgroundColor: '#0d6efd',
+                                color: 'white',
+                            '&:hover': {
+                        cursor: 'pointer',
+                    },
+                },
+            }
+        ];
 
     return (
         <>
@@ -61,9 +77,12 @@ const Table = ({
                     paginationResetDefaultPage={resetPaginationToggle}
                     customStyles={customStyles}
                     persistTableHead
-                    responsive={true}
                     paginationPerPage={10}
                     paginationRowsPerPageOptions={[10]}
+                    onRowClicked={(event) => {
+                        setHexagonFilterId(event.polygon_id);
+                    }}      
+                    conditionalRowStyles={getStyleRow}
                 />
             </div>
         </>

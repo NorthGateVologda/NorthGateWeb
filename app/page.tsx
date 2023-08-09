@@ -20,6 +20,7 @@ export default function Home() {
         return true;
     };*/
 
+    const [hexagonFilterId, setHexagonFilterId] = useState<number>(-1);
     const [city, setCity] = useState<string>('Default');
     const [houses, setHouses] = useState<boolean>(false);
     const [hexagons, setHexagons] = useState<DataRow[]>([]);
@@ -28,7 +29,7 @@ export default function Home() {
     const [population, setPopulation] = useState<GeoJsonObject>({} as GeoJsonObject);
     const [layerType, setLayerType] = useState<boolean>(false);
 
-    const cashedHexagons = useMemo(() => hexagons, [hexagons]);
+    const cashedHexagons = useMemo(() => city !== 'Default' ? hexagons : [], [hexagons, city]);
     const cashedPopulation = useMemo(() => population, [population]);
 
     useEffect(() => {
@@ -45,13 +46,13 @@ export default function Home() {
     }, [city]);
 
     useEffect(() => {
-     if (localStorage.getItem("token") && city !== 'Default') {
+     if (localStorage.getItem("token") && !showLog && !showReg) {
          getHexagons()
              .then(res => {
                   setHexagons(res);
              });
      }
-    });
+    }, [showLog, showReg]);
 
     return (
         <main>
@@ -80,11 +81,15 @@ export default function Home() {
                     layerType={layerType}
                     showHouses={houses}
                     hexagons={hexagons}
+                    hexagonFilterId={hexagonFilterId}
+                    setHexagonFilterId={setHexagonFilterId}
                 />
 
                 <Table
                     city={city}
                     hexagons={cashedHexagons}
+                    hexagonFilterId={hexagonFilterId}
+                    setHexagonFilterId={setHexagonFilterId}
                 />
             </div>
 

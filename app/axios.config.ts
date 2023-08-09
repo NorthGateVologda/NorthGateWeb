@@ -46,10 +46,10 @@ instance.interceptors.response.use(
         originalRequest._isRetry = true;
         if (
             // проверим, что ошибка именно из-за невалидного accessToken
-            error.response.status === 401 &&
+            error?.response?.status === 401 &&
             // проверим, что запрос не повторный
-            error.config &&
-            !error.config._isRetry
+            error?.config &&
+            !error?.config?._isRetry
         ) {
             try {
                 // запрос на обновление токенов
@@ -66,6 +66,6 @@ instance.interceptors.response.use(
         }
         // на случай, если возникла другая ошибка (не связанная с авторизацией)
         // пробросим эту ошибку
-        throw error;
+        
     }
 );

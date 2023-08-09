@@ -1,11 +1,15 @@
 import React from 'react';
-import {GeoJSON,} from "react-leaflet";
+import {GeoJSON} from "react-leaflet";
 import {Props} from './type';
 import {LatLngExpression} from "leaflet";
 
 
-const PopulationGrid = ({data}: Props) => {
-    const getColor = (d: number) => {
+const PopulationGrid = ({data, hexagonFilterId, setHexagonFilterId}: Props) => {
+    const getColor = (d: number, id: number) => {
+        if (id === hexagonFilterId)
+        {
+            return '#0d6efd';
+        }
         return d > 8000 ? '#800026' :
             d > 5000  ? '#BD0026' :
                 d > 4000  ? '#E31A1C' :
@@ -29,7 +33,6 @@ const PopulationGrid = ({data}: Props) => {
     return (
         <>
             <GeoJSON
-
                 data={data}
                 style={(feature) => {
                     return {
@@ -38,13 +41,16 @@ const PopulationGrid = ({data}: Props) => {
                         color: 'white',
                         dashArray: '3',
                         fillOpacity: 0.5,
-                        fillColor: getColor(feature?.properties?.population)}
+                        fillColor: getColor(feature?.properties?.population, feature?.properties?.id)}
                 }}
                 onEachFeature={(feature, layer) => {
                     // @ts-ignore
                     const center = calculateHexagonCenter(feature.geometry.coordinates[0]);
                     const pop: number = feature?.properties?.population;
                     layer.bindTooltip(`Количество человек в полигоне: ${pop}`).openTooltip(center as LatLngExpression);
+                    layer.on('click', () => {
+                        setHexagonFilterId(feature?.properties?.id);
+                    })
                 }}
             />
         </>
