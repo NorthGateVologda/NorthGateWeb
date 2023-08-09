@@ -1,47 +1,43 @@
 "use client"
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import classes from './index.module.css';
 import {Form} from "react-bootstrap";
 import {Divider, Drawer, IconButton, Switch} from "@mui/material";
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import MenuIcon from '@mui/icons-material/Menu';
-import {Bar, BarChart, Legend, Tooltip, XAxis} from 'recharts';
-import { DataRow } from '../table/columns';
-import {Buildings,
-        NumOfParks,
-        Population,
-        PopulationPolygonsEffect,
-        RatingPolygonsEffect,
-        RecommendPolygons} from '@/entities/diagrams';
-import { LogOut } from '@/entities/user';
+import {
+    Buildings,
+    NumOfParks,
+    Population,
+    PopulationPolygonsEffect,
+    RatingPolygonsEffect,
+    RecommendPolygons
+} from '@/entities/diagrams';
+import {LogOut} from '@/entities/user';
+import {Props} from "./type"
+import {FilterTableDropdown} from '@/entities/sidebar/ui/filter-table-dropdown';
 
 const Sidebar = ({
-        city,
-        hexagons,
-        houses,
-        setCity,
-        setHouses,
-        setShowLog,
-        layerType,
-        setLayerType
-    }: {
-        city: string | undefined,
-        houses: boolean,
-        hexagons: DataRow[],
-        setCity: React.Dispatch<React.SetStateAction<string>>,
-        setHouses: React.Dispatch<React.SetStateAction<boolean>>,
-        setShowLog: React.Dispatch<React.SetStateAction<boolean>>,
-        layerType: boolean,
-        setLayerType: React.Dispatch<React.SetStateAction<boolean>>
-    }) => {
+                     city,
+                     hexagons,
+                     houses,
+                     setCity,
+                     setHouses,
+                     setShowLog,
+                     layerType,
+                     setLayerType,
+                     setHexagonFilterId,
+                     divHeight,
+                     hexagonFilterId
+                 }: Props) => {
     const [open, setOpen] = useState<boolean>(true);
-    const filteredHexagons = city === 'Default' ? [] : hexagons.filter((item: {recommendation: number, rating: number}) => item.recommendation === 1 && item.rating !== 0);
+    const filteredHexagons = city === 'Default' ? [] : hexagons.filter((item: {
+        recommendation: number,
+        rating: number
+    }) => item.recommendation === 1 && item.rating !== 0);
+    const hexagonsIds = city === 'Default' ? [] : hexagons.map(item => item.polygon_id);
     const handleDrawerClose = () => setOpen(false);
     const handleDrawerOpen = () => setOpen(true);
-    const diagramWidth = 300;
-    const diagramHeight = 300;
-
-    console.log(city)
 
     return (
         <div className={classes.sidebar}>
@@ -66,7 +62,7 @@ const Sidebar = ({
                                 position: 'absolute',
                                 left: '0',
                                 zIndex: '1000',
-                                height: '100%'
+                                height: divHeight <= 180 ? '100%' : `calc(100% - ${divHeight}px)`
                             },
                         }}
                         variant="persistent"
@@ -75,7 +71,7 @@ const Sidebar = ({
                     >
                         <div className={classes.header}>
                             <IconButton onClick={handleDrawerClose}>
-                                <ChevronLeftIcon />
+                                <ChevronLeftIcon/>
                                 <div>
                                     <div>
                                         Врата Севера
@@ -113,26 +109,54 @@ const Sidebar = ({
                                     <Switch
                                         value={layerType}
                                         onChange={(e) => setLayerType(e.target.checked)}
-                                        color="default" />
+                                        color="default"/>
                                     <Form.Label>Карта парков</Form.Label>
                                 </div>
                             </div>
                         </Form.Group>
 
+                        <Form.Group className={classes.containerCenter}>
+                            <FilterTableDropdown
+                                hexagonsIds={hexagonsIds}
+                                setHexagonFilterId={setHexagonFilterId}
+                                hexagonFilterId={hexagonFilterId}
+                            />
+                        </Form.Group>
+
                         <Divider variant="fullWidth" color='#AAAAAA'/>
 
-                        <Form.Group className={classes.containerCenter}>                          
+                        <Form.Group className={classes.container}>
+                            <div
+                                className={classes.containerBody}
+                            >
+                                <Form.Check
+                                    type="switch"
+                                    label="Отобразить объекты"
+                                    disabled={city === 'Default'}
+                                    defaultChecked={houses}
+                                    onChange={(event) => setHouses(event.target.checked)}
+                                />
+                            </div>
+                        </Form.Group>
+
+                        <Divider variant="fullWidth" color='#AAAAAA'/>
+
+                        <Form.Group className={classes.containerCenter}>
                             <Population hexagons={hexagons}/>
                         </Form.Group>
 
                         <Form.Group className={classes.container}>
                             <div className={classes.containerBody}>
-                                <PopulationPolygonsEffect hexagons={hexagons}/>
+                                <PopulationPolygonsEffect
+                                    hexagons={hexagons}
+                                    setHexagonFilterId={setHexagonFilterId}/>
 
-                                <RatingPolygonsEffect hexagons={hexagons}/>
+                                <RatingPolygonsEffect
+                                    hexagons={hexagons}
+                                    setHexagonFilterId={setHexagonFilterId}/>
                             </div>
                         </Form.Group>
-                        
+
                         <Divider variant="fullWidth" color='#AAAAAA'/>
 
                         <Form.Group className={classes.container}>

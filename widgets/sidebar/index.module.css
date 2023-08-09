@@ -45,6 +45,11 @@
     justify-content: space-between;
 }
 
+.innerBody {
+    display: flex;
+    flex-direction: column;
+}
+
 .header {
     display: flex;
     flex-direction: row;
@@ -60,4 +65,3 @@
 .descriptionColors {
     margin-bottom: 20px;
 }
-

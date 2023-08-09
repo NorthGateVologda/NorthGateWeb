@@ -1,7 +1,7 @@
 import React from 'react';
-import { DataRow } from '@/widgets/table/columns';
+import {DataRow} from '@/widgets/table/columns';
 import classes from "../../ratingPolygonsEffect/ui/index.module.css";
-import {Cell, Label, Legend, Pie, PieChart, Tooltip} from "recharts";
+import {Cell, Pie, PieChart, Tooltip} from "recharts";
 
 interface Data {
     nmb_of_business_bld: number;

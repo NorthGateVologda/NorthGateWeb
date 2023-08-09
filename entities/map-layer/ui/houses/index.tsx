@@ -1,6 +1,8 @@
 import React from 'react';
-import {GeoJSON} from "react-leaflet";
 import {GeoJsonObject} from "geojson";
+import dynamic from 'next/dynamic';
+
+const GeoJSON = dynamic(() => import("react-leaflet").then((module) => ({default: module.GeoJSON})), {loading: () => <p>loading...</p>, ssr: false});
 
 const Houses = ({data}: {data: GeoJsonObject}) => {
     const getColor = (d: string) => {
@@ -22,7 +24,7 @@ const Houses = ({data}: {data: GeoJsonObject}) => {
                         opacity: 0,
                         color: 'white',
                         dashArray: '3',
-                        fillOpacity: 0.4,
+                        fillOpacity: 0.6,
                         fillColor: getColor(feature?.properties?.type)}
                 }}
             />

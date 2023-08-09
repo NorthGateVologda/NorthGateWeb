@@ -1,5 +1,6 @@
 import React from 'react';
-import classes from './index.module.css';import { DataRow } from '@/widgets/table/columns';
+import classes from './index.module.css';
+import {DataRow} from '@/widgets/table/columns';
 
 const RecommendPolygons = ({
     hexagons

@@ -1,14 +1,13 @@
 "use client"
 import {Authentication, InteractiveMap, Sidebar} from "@/widgets";
 import {Toaster} from "react-hot-toast";
-import {useEffect, useMemo, useState} from "react";
+import {ComponentType, useEffect, useMemo, useState} from "react";
 import classes from './page.module.css';
 import {Table} from "@/widgets/table";
-import { getHexagons } from "@/entities/hexagons/api/hexagonsApi";
-import { DataRow } from "@/widgets/table/columns";
-import {refreshToken} from '@/entities/user/api/authApi';
+import {getHexagons} from "@/entities/hexagons/api/hexagonsApi";
+import {DataRow} from "@/widgets/table/columns";
 import {GeoJsonObject} from "geojson";
-import { getPopulationGrid } from "@/entities/map-layer/api/geoJsonApi";
+import {getPopulationGrid} from "@/entities/map-layer/api/geoJsonApi";
 
 export default function Home() {
     /*const checkToken = () => {
@@ -20,7 +19,7 @@ export default function Home() {
         return true;
     };*/
 
-    const [hexagonFilterId, setHexagonFilterId] = useState<number>(-1);
+    const [hexagonFilterId, setHexagonFilterId] = useState<string>("-1");
     const [city, setCity] = useState<string>('Default');
     const [houses, setHouses] = useState<boolean>(false);
     const [hexagons, setHexagons] = useState<DataRow[]>([]);
@@ -31,39 +30,39 @@ export default function Home() {
 
     const cashedHexagons = useMemo(() => city !== 'Default' ? hexagons : [], [hexagons, city]);
     const cashedPopulation = useMemo(() => population, [population]);
+    const [height, setHeight] = useState(100);
+    const [divHeight, setDivHeight] = useState(0);
 
     useEffect(() => {
-        if (city === 'Default')
-        {
+        if (city === 'Default') {
             return;
         }
 
         getPopulationGrid(city)
             .then(res => {
                 setPopulation(res);
-                console.log(res);
             })
     }, [city]);
 
     useEffect(() => {
-     if (localStorage.getItem("token") && !showLog && !showReg) {
-         getHexagons()
-             .then(res => {
-                  setHexagons(res);
-             });
-     }
+        if (localStorage.getItem("token") && !showLog && !showReg) {
+            getHexagons()
+                .then(res => {
+                    setHexagons(res);
+                });
+        }
     }, [showLog, showReg]);
 
     return (
         <main>
-            <Authentication 
+            <Authentication
                 showLog={showLog}
                 setShowLog={setShowLog}
                 showReg={showReg}
                 setShowReg={setShowReg}
             />
 
-            <Sidebar
+           <Sidebar
                 city={city}
                 hexagons={cashedHexagons}
                 houses={houses}
@@ -72,6 +71,9 @@ export default function Home() {
                 setShowLog={setShowLog}
                 setLayerType={setLayerType}
                 layerType={layerType}
+                setHexagonFilterId={setHexagonFilterId}
+                hexagonFilterId={hexagonFilterId}
+                divHeight={divHeight}
             />
 
             <div className={classes.mainVertical}>
@@ -84,12 +86,12 @@ export default function Home() {
                     hexagonFilterId={hexagonFilterId}
                     setHexagonFilterId={setHexagonFilterId}
                 />
-
                 <Table
                     city={city}
                     hexagons={cashedHexagons}
                     hexagonFilterId={hexagonFilterId}
                     setHexagonFilterId={setHexagonFilterId}
+                    setDivHeight={setDivHeight}
                 />
             </div>
 
