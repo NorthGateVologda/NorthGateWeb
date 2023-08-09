@@ -12,7 +12,6 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: white;
     padding-top: 10px;
     height: fit-content;
     z-index: 1001;
@@ -31,7 +30,17 @@
     border-radius: 50%;
 }
 
+.topArrowContainer {
+    display: flex;
+    justify-content: center;
+}
+
 .arrow {
     width: 3.5em!important;
     height: 3.5em!important;
+}
+
+.arrowTop {
+    width: 2.5em!important;
+    height: 2.5em!important;
 }

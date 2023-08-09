@@ -29,6 +29,14 @@
     margin: 20px;
     display: flex;
     flex-direction: column;
+    align-items: end;
+}
+
+.containerCenter {
+    width: 30vw;
+    margin: 20px;
+    display: flex;
+    justify-content: center;
 }
 
 .containerBody {

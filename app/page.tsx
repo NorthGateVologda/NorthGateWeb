@@ -6,16 +6,24 @@ import classes from './page.module.css';
 import {Table} from "@/widgets/table";
 import { getHexagons } from "@/entities/hexagons/api/hexagonsApi";
 import { DataRow } from "@/widgets/table/columns";
-import {LogOut} from '@/entities/user';
+import {refreshToken} from '@/entities/user/api/authApi';
 import {GeoJsonObject} from "geojson";
 import { getPopulationGrid } from "@/entities/map-layer/api/geoJsonApi";
 
 export default function Home() {
+    /*const checkToken = () => {
+        if (localStorage.getItem("token"))
+        {
+            refreshToken().then(res => res);
+            return false;
+        }
+        return true;
+    };*/
+
     const [city, setCity] = useState<string>('Default');
     const [houses, setHouses] = useState<boolean>(false);
     const [hexagons, setHexagons] = useState<DataRow[]>([]);
-    const [successfulAuth, setSuccessfulAuth] = useState<boolean>(false);
-    const [showReg, setShowReg] = useState<boolean>(!localStorage.getItem("token"));
+    const [showReg, setShowReg] = useState<boolean>(/*checkToken()*/true);
     const [showLog, setShowLog] = useState<boolean>(false);
     const [population, setPopulation] = useState<GeoJsonObject>({} as GeoJsonObject);
     const [layerType, setLayerType] = useState<boolean>(false);
@@ -37,18 +45,17 @@ export default function Home() {
     }, [city]);
 
     useEffect(() => {
-     if (successfulAuth === true || city !== 'Default') {
+     if (localStorage.getItem("token") && city !== 'Default') {
          getHexagons()
              .then(res => {
                   setHexagons(res);
              });
      }
-    }, [successfulAuth]);
+    });
 
     return (
         <main>
             <Authentication 
-                setSuccessfulAuth={setSuccessfulAuth}
                 showLog={showLog}
                 setShowLog={setShowLog}
                 showReg={showReg}

@@ -7,7 +7,12 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import MenuIcon from '@mui/icons-material/Menu';
 import {Bar, BarChart, Legend, Tooltip, XAxis} from 'recharts';
 import { DataRow } from '../table/columns';
-import {CustomTooltip} from '@/entities/sidebar';
+import {Buildings,
+        NumOfParks,
+        Population,
+        PopulationPolygonsEffect,
+        RatingPolygonsEffect,
+        RecommendPolygons} from '@/entities/diagrams';
 import { LogOut } from '@/entities/user';
 
 const Sidebar = ({
@@ -51,12 +56,12 @@ const Sidebar = ({
                     </div> :
                     <Drawer
                         sx={{
-                            width: '33vw',
+                            width: '35vw',
                             flexShrink: 0,
                             '& .MuiDrawer-paper': {
                                 display: 'flex',
                                 flexDirection: 'column',
-                                width: '33vw',
+                                width: '35vw',
                                 boxSizing: 'border-box',
                                 position: 'absolute',
                                 left: '0',
@@ -116,32 +121,31 @@ const Sidebar = ({
 
                         <Divider variant="fullWidth" color='#AAAAAA'/>
 
-                        {/*<Form.Group className={classes.container}>
-                            {filteredHexagons.length <= 0 ? (
-                                <div>Выберите город для загрузки рейтинга</div>
-                            ) : null}
-                            <BarChart
-                                width={diagramWidth}
-                                height={diagramHeight}
-                                data={filteredHexagons}
-                                margin={{
-                                    top: 5,
-                                    right: 30,
-                                    left: 20,
-                                    bottom: 5,
-                                }}>
-                                <XAxis
-                                    dataKey="polygon_id"
-                                    tick={{fontSize: 10}}/>
-                                <Tooltip
-                                    content={<CustomTooltip/>}/>
-                                <Legend/>
-                                <Bar
-                                    dataKey="rating"
-                                    name="Рейтинг полигонов"
-                                    fill="#1c666e"/>
-                            </BarChart>
-                        </Form.Group>*/}
+                        <Form.Group className={classes.containerCenter}>                          
+                            <Population hexagons={hexagons}/>
+                        </Form.Group>
+
+                        <Form.Group className={classes.container}>
+                            <div className={classes.containerBody}>
+                                <PopulationPolygonsEffect hexagons={hexagons}/>
+
+                                <RatingPolygonsEffect hexagons={hexagons}/>
+                            </div>
+                        </Form.Group>
+                        
+                        <Divider variant="fullWidth" color='#AAAAAA'/>
+
+                        <Form.Group className={classes.container}>
+                            <div className={classes.containerBody}>
+                                <NumOfParks hexagons={hexagons}/>
+
+                                <RecommendPolygons hexagons={hexagons}/>
+                            </div>
+                        </Form.Group>
+
+                        <Form.Group className={classes.containerCenter}>
+                            <Buildings hexagons={hexagons}/>
+                        </Form.Group>
                     </Drawer>
             }
         </div>

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { config } from "process";
 
 export const instance = axios.create({
     // к запросу будет прицепляться cookies
@@ -52,10 +53,12 @@ instance.interceptors.response.use(
         ) {
             try {
                 // запрос на обновление токенов
-                const resp = await instance.get("/api/refresh/");
+                const resp = await instance.post("/api/user/token/refresh/", {refresh: localStorage.getItem("refresh"), isAuthorize: false});
                 // сохраняем новый accessToken в localStorage
                 localStorage.setItem("token", resp.data.access);
+                localStorage.setItem("refresh", resp.data.refresh);
                 // переотправляем запрос с обновленным accessToken
+                console.log('Refreshed');
                 return instance.request(originalRequest);
             } catch (error) {
                 console.debug("AUTH ERROR");

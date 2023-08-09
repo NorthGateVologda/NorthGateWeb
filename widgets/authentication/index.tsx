@@ -8,13 +8,11 @@ import toast from "react-hot-toast";
 
 
 const Authentication = ({
-    setSuccessfulAuth,
     showReg,
     setShowReg,
     showLog,
     setShowLog
 }: {
-    setSuccessfulAuth: React.Dispatch<React.SetStateAction<boolean>>,
     showReg: boolean,
     setShowReg: React.Dispatch<React.SetStateAction<boolean>>,
     showLog: boolean,
@@ -33,7 +31,6 @@ const Authentication = ({
             {
                 setShowReg(false);
                 setShowLog(false);
-                setSuccessfulAuth(true);
             }
         }).catch(function(error) {
             console.debug(`status: ${error.response.status} ${error.response.statusText}`);
@@ -57,7 +54,6 @@ const Authentication = ({
             {
                 setShowLog(false);
                 setShowReg(false);
-                setSuccessfulAuth(true);
             }
         }).catch(function(error) {
             console.debug(`status: ${error.response.status} ${error.response.statusText}`);

@@ -1,0 +1,22 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.population {
+    color: #378333;
+    font-size: 64px;
+    line-height: 1.2;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.title {
+    font-size: 14px;
+    text-align: center;
+}

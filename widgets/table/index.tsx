@@ -4,6 +4,7 @@ import DataTable from "react-data-table-component";
 import {columns, customStyles, DataRow} from "@/widgets/table/columns";
 import Filter from "@/entities/table/ui/filter";
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import classes from './index.module.css';
 import { IconButton } from '@mui/material';
 
@@ -36,16 +37,19 @@ const Table = ({
             </IconButton>
 
             <div className={open ? classes.tableContainer : classes.tableContainer + ' ' + classes.hidden}>
-                <IconButton
-                    onClick={() => {
-                        setOpen(false);
-                    }}
-                >
-                    <ExpandLessIcon
-                        className={classes.arrow}
-                        color='action'
-                    />
-                </IconButton>
+                <div className={classes.topArrowContainer}>
+                    <IconButton
+                        onClick={() => {
+                            setOpen(false);
+                        }}
+                    >
+                        <ExpandMoreIcon
+                            className={classes.arrowTop}
+                            color='action'
+                        />
+                    </IconButton>
+                </div>
+
                 <DataTable
                     className={open ? classes.table : classes.table + ' ' + classes.minimizeTable}
                     title="Рекомендательный сервис размещения парков"
@@ -58,8 +62,8 @@ const Table = ({
                     customStyles={customStyles}
                     persistTableHead
                     responsive={true}
-                    paginationPerPage={20}
-                    paginationRowsPerPageOptions={[20, 21]}
+                    paginationPerPage={10}
+                    paginationRowsPerPageOptions={[10]}
                 />
             </div>
         </>
