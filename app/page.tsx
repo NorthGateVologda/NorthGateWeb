@@ -10,20 +10,11 @@ import {GeoJsonObject} from "geojson";
 import {getPopulationGrid} from "@/entities/map-layer/api/geoJsonApi";
 
 export default function Home() {
-    /*const checkToken = () => {
-        if (localStorage.getItem("token"))
-        {
-            refreshToken().then(res => res);
-            return false;
-        }
-        return true;
-    };*/
-
     const [hexagonFilterId, setHexagonFilterId] = useState<string>("-1");
     const [city, setCity] = useState<string>('Default');
     const [houses, setHouses] = useState<boolean>(false);
     const [hexagons, setHexagons] = useState<DataRow[]>([]);
-    const [showReg, setShowReg] = useState<boolean>(/*checkToken()*/true);
+    const [showReg, setShowReg] = useState<boolean>(/*checkToken()*/typeof window !== "undefined" ? !localStorage.getItem("token") : true);
     const [showLog, setShowLog] = useState<boolean>(false);
     const [population, setPopulation] = useState<GeoJsonObject>({} as GeoJsonObject);
     const [layerType, setLayerType] = useState<boolean>(false);
