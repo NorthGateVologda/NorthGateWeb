@@ -7,15 +7,10 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import classes from './index.module.css';
 import {IconButton} from '@mui/material';
 import {Props} from "@/widgets/table/type";
+import {ExportExcelButton} from "@/widgets/excel";
 
-const Table = ({city, hexagons, hexagonFilterId, setHexagonFilterId, setDivHeight}: Props) => {
-    let preparedHexagonFilterId: number;
-
-    if (hexagonFilterId.endsWith('T')) {
-        preparedHexagonFilterId = parseInt(hexagonFilterId.slice(0, -1));
-    } else {
-        preparedHexagonFilterId = parseInt(hexagonFilterId);
-    }
+const Table = ({city, hexagons, hexagonFilterId, setHexagonFilterId, setDivHeight, openTable, setOpenTable}: Props) => {
+    let preparedHexagonFilterId: number = parseInt(hexagonFilterId);
 
     const filterAndSortData = () => {
         if (city === 'Default') {
@@ -39,7 +34,6 @@ const Table = ({city, hexagons, hexagonFilterId, setHexagonFilterId, setDivHeigh
 
     const [filterPolygonId, setFilterPolygonId] = useState<number>(-1);
     const [resetPaginationToggle, setResetPaginationToggle] = useState<boolean>(false);
-    const [open, setOpen] = useState<boolean>(false);
     const data = filterAndSortData();
     const [display, setDisplay] = useState<string>("display")
     const getStyleRow = [
@@ -54,11 +48,7 @@ const Table = ({city, hexagons, hexagonFilterId, setHexagonFilterId, setDivHeigh
             },
         }
     ];
-    const opened: boolean = false;
-
     const divRef = useRef(null);
-    const expandMorRef = useRef(null);
-    const arrowRef = useRef(null);
 
     useEffect(() => {
         const targetNode = divRef.current;
@@ -82,12 +72,32 @@ const Table = ({city, hexagons, hexagonFilterId, setHexagonFilterId, setDivHeigh
         };
     }, []);
 
+    const CustomHeader = ({title}: { title: string }) => (
+        <div className={classes.customHeaderContainer}>
+            <h2 className={classes.customHeaderTitle}>{title}</h2>
+            <IconButton
+                className={classes.customHeaderIcon}
+                onClick={() => {
+                    setOpenTable(false);
+                }}
+            >
+                <ExpandMoreIcon
+                    className={classes.arrowTop}
+                    color='action'
+                />
+            </IconButton>
+            <ExportExcelButton
+                data={data}
+                worksheetName="Рекомендации по размещению"/>
+        </div>
+    );
+
     return (
         <>
             <IconButton
                 className={classes.bottomArrow}
                 onClick={() => {
-                    setOpen(true);
+                    setOpenTable(true);
                 }}
             >
                 <ExpandLessIcon
@@ -96,24 +106,11 @@ const Table = ({city, hexagons, hexagonFilterId, setHexagonFilterId, setDivHeigh
                 />
             </IconButton>
 
-            <div className={open ? classes.tableContainer : classes.tableContainer + ' ' + classes.hidden}>
-                <div className={classes.topArrowContainer}>
-                    <IconButton
-                        onClick={() => {
-                            setOpen(false);
-                        }}
-                    >
-                        <ExpandMoreIcon
-                            className={classes.arrowTop}
-                            color='action'
-                        />
-                    </IconButton>
-                </div>
-
+            <div className={openTable ? classes.tableContainer : classes.tableContainer + ' ' + classes.hidden}>
                 <div id="table" ref={divRef}>
                     <DataTable
-                        className={open ? classes.table : classes.table + ' ' + classes.minimizeTable}
-                        title="Рекомендательный сервис размещения парков"
+                        className={openTable ? classes.table : classes.table + ' ' + classes.minimizeTable}
+                        title={<CustomHeader title="Рекомендательный сервис размещения парков"/>}
                         columns={columns}
                         data={data}
                         pagination

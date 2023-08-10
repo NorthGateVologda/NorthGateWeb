@@ -13,7 +13,7 @@ export interface DataRow {
     nmb_of_tourism_bld: number;
     max_rating: number;
     max_population: number;
-};
+}
 
 export const columns: TableColumn<DataRow>[] = [
     {

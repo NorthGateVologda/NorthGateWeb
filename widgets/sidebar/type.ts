@@ -12,7 +12,8 @@ type Props = {
     setLayerType: React.Dispatch<React.SetStateAction<boolean>>,
     setHexagonFilterId: React.Dispatch<React.SetStateAction<string>>,
     hexagonFilterId: string,
-    divHeight: number
+    divHeight: number,
+    openTable: boolean
 };
 
 export type {Props};

@@ -13,7 +13,8 @@ const RatingPolygonsEffect = ({
         recommendation: number,
         rating: number
     }) => item.recommendation === 1 && item.rating !== 0);
-    const diagramWidth: number = 300;
+    filteredHexagons.sort((a, b) => b.rating - a.rating);
+    const diagramWidth: number = 200;
     const diagramHeight: number = 350;
     return (
         <div className={classes.container}>
