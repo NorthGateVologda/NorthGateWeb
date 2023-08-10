@@ -53,8 +53,8 @@ const InteractiveMap = ({
                 />
 
                 <div className={classes.legends}>
-                    <PopulationLegend/>
                     <ObjectLegend/>
+                    <PopulationLegend/>
                 </div>
 
                 {

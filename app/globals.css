@@ -59,6 +59,7 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+  transition: all ease-in 300ms;
 }
 
 a {

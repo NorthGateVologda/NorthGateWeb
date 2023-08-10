@@ -1,5 +1,5 @@
 .container {
-    width: fit-content;
+    width: 100%;
     margin: 5px;
 }
 
@@ -22,4 +22,22 @@
     -webkit-border-radius: 50%;
     -khtml-border-radius: 50%;
     margin-right: 10px;
+}
+
+.legend {
+    display: flex;
+    flex-direction: column;
+}
+
+.legendCaption {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.colorLine {
+    width: 100%;
+    height: 10px;
+    background: linear-gradient(to right, #FFEDA0, #800026);
+    border-radius: 50px;
 }
