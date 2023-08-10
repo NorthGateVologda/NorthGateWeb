@@ -64,7 +64,7 @@ const Sidebar = ({
                                 width: 'fit-content',
                                 position: 'absolute',
                                 left: '0',
-                                zIndex: '1000',
+                                zIndex: '1001',
                                 height: !openTable ? '100%' : `calc(100% - ${divHeight}px)`
                             },
                             '@media (max-width: 1000px)': {
