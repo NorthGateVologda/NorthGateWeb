@@ -67,6 +67,16 @@ const Table = ({city, hexagons, hexagonFilterId, setHexagonFilterId, setDivHeigh
         //@ts-ignore
         observer.observe(targetNode, observerOptions);
 
+        const mediaQuery = window.matchMedia('(max-width: 1000px)');
+        const mediaQueryListener = () => {
+          //@ts-ignore
+            const newHeight = targetNode?.clientHeight;
+            console.log(newHeight)
+            setDivHeight(newHeight);
+        };
+
+        mediaQuery.addListener(mediaQueryListener);
+
         return () => {
             observer.disconnect();
         };
