@@ -77,8 +77,19 @@ const Table = ({city, hexagons, hexagonFilterId, setHexagonFilterId, setDivHeigh
 
         mediaQuery.addListener(mediaQueryListener);
 
+        const resizeListener = () => {
+            //@ts-ignore
+            const newHeight = targetNode?.clientHeight;
+            console.log(newHeight)
+            setDivHeight(newHeight);
+        }
+
+        window.addEventListener('resize', resizeListener);
+
         return () => {
             observer.disconnect();
+            mediaQuery.removeListener(mediaQueryListener);
+            window.removeEventListener('resize', resizeListener);
         };
     }, []);
 
