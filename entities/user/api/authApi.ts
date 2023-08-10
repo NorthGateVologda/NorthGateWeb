@@ -25,6 +25,6 @@ export const registration = async (username : String, password : String): Promis
     const data = await instance.post("/api/user/registration/", {username, password, isAuthorize});
     console.debug(`status: ${data.status} ${data.statusText}`);
     localStorage.setItem("token", data.data.data.token.access);
-    localStorage.setItem("refresh", data.data.refresh);
+    localStorage.setItem("refresh", data.data.data.token.refresh);
     return data;
 }

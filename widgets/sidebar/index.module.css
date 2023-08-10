@@ -18,36 +18,55 @@
 }
 
 .spinner {
-    margin-bottom: 20px;
     border-color: lightgray;
     width: fit-content;
     font-size: 0.9em;
 }
 
 .container {
-    width: 30vw;
-    margin: 20px;
     display: flex;
     flex-direction: column;
-}
-
-.containerCenter {
-    width: 30vw;
     margin: 20px;
-    display: flex;
-    justify-content: center;
+    gap: 25px;
 }
 
-.containerBody {
-    width: 30vw;
+.containerGroup {
+    width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
+    gap: 80px;
 }
 
-.innerBody {
+.containerGroupBodyRow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.containerGroupBodyColumn {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.sidebarHideButton {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.sidebarHideButton:hover {
+    background-color: white !important;
+}
+
+.containerCenter {
+    margin: 20px;
+    display: flex;
+    justify-content: center;
 }
 
 .header {
@@ -62,29 +81,22 @@
     font-size: 0.55em;
 }
 
-.descriptionColors {
-    margin-bottom: 20px;
-}
-
 @media (max-width: 1000px) {
     .container {
-        width: 100%;
         display: flex;
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 20px;
-        margin: 0;
+        padding: 20px 0;
     }
 
-    .containerBody {
+    .containerGroup,
+    .containerGroupBodyRow {
         display: flex;
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
         gap: 20px;
-        margin: 0;
-        width: 100%;
+    }
+
+    .containerGroup {
+        padding: 20px 0;
     }
 
     .containerCenter {

@@ -1,7 +1,7 @@
 "use client"
 import {Authentication, InteractiveMap, Sidebar} from "@/widgets";
 import {Toaster} from "react-hot-toast";
-import {ComponentType, useEffect, useMemo, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import classes from './page.module.css';
 import {Table} from "@/widgets/table";
 import {getHexagons} from "@/entities/hexagons/api/hexagonsApi";
@@ -25,6 +25,7 @@ export default function Home() {
     const cashedPopulation = useMemo(() => population, [population]);
     const [height, setHeight] = useState(100);
     const [divHeight, setDivHeight] = useState(0);
+    const [openTable, setOpenTable] = useState<boolean>(false);
 
     useEffect(() => {
         if (city === 'Default') {
@@ -67,6 +68,7 @@ export default function Home() {
                 setHexagonFilterId={setHexagonFilterId}
                 hexagonFilterId={hexagonFilterId}
                 divHeight={divHeight}
+                openTable={openTable}
             />
 
             <div className={classes.mainVertical}>
@@ -85,6 +87,8 @@ export default function Home() {
                     hexagonFilterId={hexagonFilterId}
                     setHexagonFilterId={setHexagonFilterId}
                     setDivHeight={setDivHeight}
+                    openTable={openTable}
+                    setOpenTable={setOpenTable}
                 />
             </div>
 

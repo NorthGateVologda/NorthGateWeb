@@ -18,11 +18,11 @@
 
 .bottomArrow {
     position: absolute !important;
-    bottom: 10px;
+    bottom: 10px !important;
     z-index: 1001;
-    background-color: rgba(13, 110, 253, 0.45);
-    border-radius: 50%;
-    margin: 0 50%;
+    background-color: rgba(13, 110, 253, 0.45) !important;
+    border-radius: 50% !important;
+    margin: 0 50% !important;
 }
 
 .topArrowContainer {
@@ -49,12 +49,12 @@
 
 .customHeaderContainer {
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    position: relative;
-    width: 100%;
-    height: 90px;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    position: relative !important;
+    width: 100% !important;
+    height: 90px !important;
 }
 
 .customHeaderTitle {
@@ -65,25 +65,26 @@
 }
 
 .customHeaderIcon {
-    position: absolute;
-    margin: 0 50%;
+    position: absolute !important;
+    margin: 0 50% !important;
 }
 
 @media (max-width: 1000px) {
     .customHeaderContainer {
         display: flex;
-        flex-direction: column;
+        flex-direction: column !important;
         align-items: center;
-        height: auto;
-        width: 65%;
+        height: auto !important;
+        width: 65% !important;
+        padding: 10px 0;
     }
 
     .customHeaderIcon {
-        position: unset;
+        position: unset !important;
         display: inline;
         margin: 0;
         padding: 0;
-        width: 50px;
+        width: 50px !important;
     }
 
     .customHeaderTitle {

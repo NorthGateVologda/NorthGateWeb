@@ -1,7 +1,7 @@
 "use client"
-import React, {useMemo, useState} from 'react';
+import React, {useState} from 'react';
 import classes from './index.module.css';
-import {Button, Form} from "react-bootstrap";
+import {Form} from "react-bootstrap";
 import {Divider, Drawer, IconButton, Switch} from "@mui/material";
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -30,7 +30,8 @@ const Sidebar = ({
                      setLayerType,
                      setHexagonFilterId,
                      divHeight,
-                     hexagonFilterId
+                     hexagonFilterId,
+                     openTable
                  }: Props) => {
     const [open, setOpen] = useState<boolean>(true);
     const [showInfo, setShowInfo] = useState<boolean>(false);
@@ -64,10 +65,10 @@ const Sidebar = ({
                                 position: 'absolute',
                                 left: '0',
                                 zIndex: '1000',
-                                height: divHeight <= 180 ? '100%' : `calc(100% - ${divHeight}px)`
+                                height: !openTable ? '100%' : `calc(100% - ${divHeight}px)`
                             },
                             '@media (max-width: 1000px)': {
-                              height: divHeight <= 180 ? '100%' : `calc(100% - ${divHeight}px)`,
+                              height: !openTable ? '100%' : `calc(100% - ${divHeight}px) !important`,
                             },
                         }}
                         variant="persistent"
@@ -75,8 +76,8 @@ const Sidebar = ({
                         open={open}
                     >
                         <div className={classes.header}>
-                            <div className={classes.containerBody}>
-                                <IconButton onClick={handleDrawerClose}>
+                            <div className={classes.containerGroup}>
+                                <IconButton onClick={handleDrawerClose} className={classes.sidebarHideButton}>
                                     <ChevronLeftIcon/>
                                     <div>
                                         <div>
@@ -87,55 +88,51 @@ const Sidebar = ({
                                         </div>
                                     </div>
                                 </IconButton>
+                            </div>
 
+                            <div className={classes.containerGroupBodyRow}>
                                 <IconButton onClick={() => setShowInfo(true)}>
                                     <QuestionMarkIcon/>
                                 </IconButton>
+                                <LogOut setShowLog={setShowLog} />
                             </div>
-
-                            <LogOut
-                                setShowLog={setShowLog}
-                            />
-
                         </div>
 
                         <Divider variant="fullWidth" color='#AAAAAA'/>
 
                         <Form.Group className={classes.container}>
-                            <Form.Label>Город</Form.Label>
-                            <div
-                                className={classes.containerBody}
-                            >
-                                <Form.Select
-                                    value={city}
-                                    className={classes.spinner}
-                                    onChange={event => {
-                                        setCity(event.target.value);
-                                    }}
-                                >
-                                    <option value="Default" disabled={true}>Выберите город</option>
-                                    <option value="Архангельск">Архангельск</option>
-                                </Form.Select>
-                                <div>
-                                    <Form.Label>Тепловая карта</Form.Label>
+                            <div className={classes.containerGroup}>
+                                <div className={classes.containerGroupBodyRow}>
+                                    <Form.Select
+                                        value={city}
+                                        className={classes.spinner}
+                                        onChange={event => {
+                                            setCity(event.target.value);
+                                        }}
+                                    >
+                                        <option value="Default" disabled={true}>Выберите город</option>
+                                        <option value="Архангельск">Архангельск</option>
+                                    </Form.Select>
+                                </div>
+                                <div className={classes.containerGroupBodyRow}>
+                                   <FilterTableDropdown
+                                        hexagonsIds={hexagonsIds}
+                                        setHexagonFilterId={setHexagonFilterId}
+                                        hexagonFilterId={hexagonFilterId}
+                                    />
+                                </div>
+                            </div>
+                            <div className={classes.containerGroup}>
+                                <div className={classes.containerGroupBodyRow}>
+                                    <Form.Label style={{margin: 0}}>Карта плотности населения</Form.Label>
                                     <Switch
                                         value={layerType}
                                         onChange={(e) => setLayerType(e.target.checked)}
+                                        disabled={city === 'Default'}
                                         color="default"/>
-                                    <Form.Label>Карта парков</Form.Label>
+                                    <Form.Label style={{margin: 0}}>Карта парков</Form.Label>
                                 </div>
-                            </div>
-
-                            <div className={classes.containerBody}>
-                                <FilterTableDropdown
-                                    hexagonsIds={hexagonsIds}
-                                    setHexagonFilterId={setHexagonFilterId}
-                                    hexagonFilterId={hexagonFilterId}
-                                />
-
-                                <div
-                                    className='align-self-end'
-                                >
+                                <div className={classes.containerGroupBodyRow}>
                                     <Form.Check
                                         type="switch"
                                         label="Отобразить объекты"
@@ -154,8 +151,10 @@ const Sidebar = ({
                                     <Population hexagons={hexagons}/>
                                 </Form.Group>
 
+                                <Divider variant="fullWidth" color='#AAAAAA'/>
+
                                 <Form.Group className={classes.container}>
-                                    <div className={classes.containerBody}>
+                                    <div className={classes.containerGroupBodyRow}>
                                         <PopulationPolygonsEffect
                                             hexagons={hexagons}
                                             setHexagonFilterId={setHexagonFilterId}/>
@@ -169,12 +168,13 @@ const Sidebar = ({
                                 <Divider variant="fullWidth" color='#AAAAAA'/>
 
                                 <Form.Group className={classes.container}>
-                                    <div className={classes.containerBody}>
+                                    <div className={classes.containerGroupBodyRow}>
                                         <NumOfParks hexagons={hexagons}/>
-
                                         <RecommendPolygons hexagons={hexagons}/>
                                     </div>
                                 </Form.Group>
+
+                                <Divider variant="fullWidth" color='#AAAAAA'/>
 
                                 <Form.Group className={classes.containerCenter}>
                                     <Buildings hexagons={hexagons}/>
@@ -184,7 +184,6 @@ const Sidebar = ({
                         }
                     </Drawer>
             }
-
             <Info show={showInfo} setShow={setShowInfo}/>
         </div>
     );

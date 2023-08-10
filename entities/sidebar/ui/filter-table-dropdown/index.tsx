@@ -1,9 +1,14 @@
 import React, {useState} from 'react';
-import {Button, ButtonGroup, Dropdown, Form} from "react-bootstrap";
+import {Dropdown, Form} from "react-bootstrap";
 
 
 const CustomMenu = React.forwardRef(
-    ({ children, style, className, 'aria-labelledby': labeledBy }: {children: React.ReactNode, style:React.CSSProperties, className: string, 'aria-labelledby': {labeledBy: string | undefined}}, ref: React.ForwardedRef<HTMLDivElement>) => {
+    ({children, style, className, 'aria-labelledby': labeledBy}: {
+        children: React.ReactNode,
+        style: React.CSSProperties,
+        className: string,
+        'aria-labelledby': { labeledBy: string | undefined }
+    }, ref: React.ForwardedRef<HTMLDivElement>) => {
         const [value, setValue] = useState('');
 
         return (
@@ -39,21 +44,27 @@ const CustomMenu = React.forwardRef(
 
 CustomMenu.displayName = 'CustomMenu';
 
-const FilterTableDropdown = ({hexagonsIds, hexagonFilterId, setHexagonFilterId}: {hexagonsIds: number[], hexagonFilterId: string, setHexagonFilterId: React.Dispatch<React.SetStateAction<string>>}) => {
+const FilterTableDropdown = ({hexagonsIds, hexagonFilterId, setHexagonFilterId}: {
+    hexagonsIds: number[],
+    hexagonFilterId: string,
+    setHexagonFilterId: React.Dispatch<React.SetStateAction<string>>
+}) => {
     const hexagonId = parseInt(hexagonFilterId);
 
     return (
         <>
             <Dropdown>
                 <Dropdown.Toggle>
-                    {hexagonId === -1 ? 'Все полигоны' : `Полигон ${hexagonFilterId}`}
+                    {hexagonId === -1 ? 'Все полигоны' : `Полигон ${hexagonId}`}
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu
                     as={CustomMenu}
-                    style={{ maxHeight: '200px', overflowY: 'scroll'}}
+                    style={{maxHeight: '200px', overflowY: 'scroll'}}
                 >
-                    {hexagonsIds.map((val, i) => (<Dropdown.Item onClick={() => {setHexagonFilterId(val.toString())}} key={val} eventKey={val}>{val}</Dropdown.Item>))}
+                    {hexagonsIds.map((val, i) => (<Dropdown.Item onClick={() => {
+                        setHexagonFilterId(val.toString())
+                    }} key={val} eventKey={val}>{val}</Dropdown.Item>))}
                 </Dropdown.Menu>
             </Dropdown>
         </>
