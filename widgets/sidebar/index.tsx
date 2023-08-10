@@ -61,8 +61,8 @@ const Sidebar = ({
                             '& .MuiDrawer-paper': {
                                 display: 'flex',
                                 flexDirection: 'column',
-                                width: '42vw',
-                                maxWidth: '42vw',
+                                width: '47vw',
+                                maxWidth: '47vw',
                                 position: 'absolute',
                                 left: '0',
                                 zIndex: '1001',
@@ -134,13 +134,11 @@ const Sidebar = ({
                                     <Form.Label style={{margin: 0}}>Карта парков</Form.Label>
                                 </div>
                                 <div className={classes.containerGroupBodyRow}>
-                                    <Form.Check
-                                        type="switch"
-                                        label="Отобразить объекты"
-                                        disabled={city === 'Default'}
-                                        defaultChecked={houses}
-                                        onChange={(event) => setHouses(event.target.checked)}
-                                    />
+                                    <Form.Label style={{margin: 0}}>Отобразить объекты</Form.Label>
+                                    <Switch
+                                        value={houses}
+                                        onChange={(e) => setHouses(e.target.checked)}
+                                        disabled={city === 'Default'}/>
                                 </div>
                             </div>
                         </Form.Group>
