@@ -96,17 +96,6 @@ const Table = ({city, hexagons, hexagonFilterId, setHexagonFilterId, setDivHeigh
     const CustomHeader = ({title}: { title: string }) => (
         <div className={classes.customHeaderContainer}>
             <h2 className={classes.customHeaderTitle}>{title}</h2>
-            <IconButton
-                className={classes.customHeaderIcon}
-                onClick={() => {
-                    setOpenTable(false);
-                }}
-            >
-                <ExpandMoreIcon
-                    className={classes.arrowTop}
-                    color='action'
-                />
-            </IconButton>
             <ExportExcelButton
                 data={data}
                 worksheetName="Рекомендации по размещению"/>
@@ -127,10 +116,21 @@ const Table = ({city, hexagons, hexagonFilterId, setHexagonFilterId, setDivHeigh
                 />
             </IconButton>
 
-            <div className={openTable ? classes.tableContainer : classes.tableContainer + ' ' + classes.hidden}>
+            <div className={openTable ? classes.tableContainer : classes.hidden}>
                 <div id="table" ref={divRef}>
+                    <IconButton
+                        className={classes.customHeaderIcon}
+                        onClick={() => {
+                            setOpenTable(false);
+                        }}
+                    >
+                        <ExpandMoreIcon
+                            className={classes.arrowTop}
+                            color='action'
+                        />
+                    </IconButton>
                     <DataTable
-                        className={openTable ? classes.table : classes.table + ' ' + classes.minimizeTable}
+                        className={classes.table}
                         title={<CustomHeader title="Рекомендательный сервис размещения парков"/>}
                         columns={columns}
                         data={data}

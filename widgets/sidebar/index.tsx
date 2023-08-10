@@ -61,10 +61,11 @@ const Sidebar = ({
                             '& .MuiDrawer-paper': {
                                 display: 'flex',
                                 flexDirection: 'column',
-                                width: 'fit-content',
+                                width: '42vw',
+                                maxWidth: '42vw',
                                 position: 'absolute',
                                 left: '0',
-                                zIndex: '1000',
+                                zIndex: '1001',
                                 height: !openTable ? '100%' : `calc(100% - ${divHeight}px)`
                             },
                             '@media (max-width: 1000px)': {

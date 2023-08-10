@@ -19,14 +19,12 @@ export const columns: TableColumn<DataRow>[] = [
     {
         name: "ID",
         selector: row => row.polygon_id,
-        sortable: true,
         width: '80px',
         reorder: true
     },
     {
         name: "Рекомендовано размещение парка",
         selector: (row) => row.recommendation,
-        sortable: true,
         width: '250px',
         reorder: true,
         conditionalCellStyles: [
@@ -47,14 +45,12 @@ export const columns: TableColumn<DataRow>[] = [
     {
         name: "Количество парков",
         selector: (row) => row.nmb_of_parks,
-        sortable: true,
         width: '158px',
         reorder: true
     },
     {
         name: "Количество жителей",
         selector: (row) => row.population,
-        sortable: true,
         width: '166px',
         reorder: true,
         conditionalCellStyles: [
@@ -114,7 +110,6 @@ export const columns: TableColumn<DataRow>[] = [
     {
         name: "Рейтинг комфортности полигона",
         selector: (row) => row.rating,
-        sortable: true,
         width: '235px',
         reorder: true,
         conditionalCellStyles: [
@@ -129,35 +124,30 @@ export const columns: TableColumn<DataRow>[] = [
     {
         name: "Количество жилых домов",
         selector: (row) => row.nmb_of_residential_bld,
-        sortable: true,
         width: '197px',
         reorder: true
     },
     {
         name: "Количество обьектов транспортной инф.",
         selector: (row) => row.nmb_of_trnsp_inf_bld,
-        sortable: true,
         width: '280px',
         reorder: true
     },
     {
         name: "Количество объектов социальной инф.",
         selector: (row) => row.nmb_of_soc_infr_bld,
-        sortable: true,
         width: '280px',
         reorder: true
     },
     {
         name: "Количество объекты бизнеса сферы услуг",
         selector: (row) => row.nmb_of_business_bld,
-        sortable: true,
         width: '288px',
         reorder: true
     },
     {
         name: "Количество объектов туризма",
         selector: (row) => row.nmb_of_tourism_bld,
-        sortable: true,
         width: '221px',
         reorder: true
     }
