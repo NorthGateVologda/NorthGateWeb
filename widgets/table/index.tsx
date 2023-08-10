@@ -67,8 +67,29 @@ const Table = ({city, hexagons, hexagonFilterId, setHexagonFilterId, setDivHeigh
         //@ts-ignore
         observer.observe(targetNode, observerOptions);
 
+        const mediaQuery = window.matchMedia('(max-width: 1000px)');
+        const mediaQueryListener = () => {
+          //@ts-ignore
+            const newHeight = targetNode?.clientHeight;
+            console.log(newHeight)
+            setDivHeight(newHeight);
+        };
+
+        mediaQuery.addListener(mediaQueryListener);
+
+        const resizeListener = () => {
+            //@ts-ignore
+            const newHeight = targetNode?.clientHeight;
+            console.log(newHeight)
+            setDivHeight(newHeight);
+        }
+
+        window.addEventListener('resize', resizeListener);
+
         return () => {
             observer.disconnect();
+            mediaQuery.removeListener(mediaQueryListener);
+            window.removeEventListener('resize', resizeListener);
         };
     }, []);
 
