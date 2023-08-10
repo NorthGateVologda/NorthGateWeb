@@ -13,10 +13,10 @@
 }
 
 .customHeaderIcon {
-    position: absolute;
-    display: inline-block;
-    margin: 0 50%;
-    top: -70px;
+    position: absolute !important;
+    display: inline-block !important;
+    margin: 0 50% !important;
+    top: -70px !important;
 }
 
 .hidden {
