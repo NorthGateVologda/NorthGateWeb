@@ -12,8 +12,15 @@
     z-index: 1001;
 }
 
+.customHeaderIcon {
+    position: absolute;
+    display: inline-block;
+    margin: 0 50%;
+    top: -70px;
+}
+
 .hidden {
-    z-index: -1001;
+    display: none;
 }
 
 .bottomArrow {
@@ -52,7 +59,6 @@
     flex-direction: row !important;
     align-items: center !important;
     justify-content: space-between !important;
-    position: relative !important;
     width: 100% !important;
     height: 90px !important;
 }
@@ -62,11 +68,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-.customHeaderIcon {
-    position: absolute !important;
-    margin: 0 50% !important;
 }
 
 @media (max-width: 1000px) {

@@ -48,7 +48,7 @@ export default function Home() {
     }, [showLog, showReg]);
 
     return (
-        <main>
+        <main className="mainContainer">
             <Authentication
                 showLog={showLog}
                 setShowLog={setShowLog}

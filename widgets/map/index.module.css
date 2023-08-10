@@ -13,8 +13,8 @@
 
 .legends {
     position: absolute;
-    right: 20px;
-    bottom: 20px;
+    top: 20px;
+    right: 50px;
     display: flex;
     flex-direction: column;
     z-index: 1000;
