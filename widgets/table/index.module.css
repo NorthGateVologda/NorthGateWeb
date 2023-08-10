@@ -20,9 +20,9 @@
     position: absolute !important;
     bottom: 10px;
     z-index: 1001;
-    align-self: center;
     background-color: rgba(13, 110, 253, 0.45);
     border-radius: 50%;
+    margin: 0 50%;
 }
 
 .topArrowContainer {
@@ -45,4 +45,49 @@
 .tableContainer {
     display: flex;
     flex-direction: column;
+}
+
+.customHeaderContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    width: 100%;
+    height: 90px;
+}
+
+.customHeaderTitle {
+    word-break: break-all;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.customHeaderIcon {
+    position: absolute;
+    margin: 0 50%;
+}
+
+@media (max-width: 1000px) {
+    .customHeaderContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: auto;
+        width: 65%;
+    }
+
+    .customHeaderIcon {
+        position: unset;
+        display: inline;
+        margin: 0;
+        padding: 0;
+        width: 50px;
+    }
+
+    .customHeaderTitle {
+        text-align: center;
+        word-break: break-all;
+    }
 }

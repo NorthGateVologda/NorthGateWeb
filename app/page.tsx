@@ -28,6 +28,8 @@ export default function Home() {
     const [population, setPopulation] = useState<GeoJsonObject>({} as GeoJsonObject);
     const [layerType, setLayerType] = useState<boolean>(false);
 
+    console.log(hexagons)
+
     const cashedHexagons = useMemo(() => city !== 'Default' ? hexagons : [], [hexagons, city]);
     const cashedPopulation = useMemo(() => population, [population]);
     const [height, setHeight] = useState(100);

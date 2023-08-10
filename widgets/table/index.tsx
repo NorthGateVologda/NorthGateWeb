@@ -7,6 +7,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import classes from './index.module.css';
 import {IconButton} from '@mui/material';
 import {Props} from "@/widgets/table/type";
+import {ExportExcelButton} from "@/widgets/excel";
 
 const Table = ({city, hexagons, hexagonFilterId, setHexagonFilterId, setDivHeight}: Props) => {
     let preparedHexagonFilterId: number;
@@ -54,11 +55,7 @@ const Table = ({city, hexagons, hexagonFilterId, setHexagonFilterId, setDivHeigh
             },
         }
     ];
-    const opened: boolean = false;
-
     const divRef = useRef(null);
-    const expandMorRef = useRef(null);
-    const arrowRef = useRef(null);
 
     useEffect(() => {
         const targetNode = divRef.current;
@@ -82,6 +79,26 @@ const Table = ({city, hexagons, hexagonFilterId, setHexagonFilterId, setDivHeigh
         };
     }, []);
 
+    const CustomHeader = ({title}: { title: string }) => (
+        <div className={classes.customHeaderContainer}>
+            <h2 className={classes.customHeaderTitle}>{title}</h2>
+            <IconButton
+                className={classes.customHeaderIcon}
+                onClick={() => {
+                    setOpen(false);
+                }}
+            >
+                <ExpandMoreIcon
+                    className={classes.arrowTop}
+                    color='action'
+                />
+            </IconButton>
+            <ExportExcelButton
+                data={data}
+                worksheetName="Рекомендации по размещению"/>
+        </div>
+    );
+
     return (
         <>
             <IconButton
@@ -97,23 +114,10 @@ const Table = ({city, hexagons, hexagonFilterId, setHexagonFilterId, setDivHeigh
             </IconButton>
 
             <div className={open ? classes.tableContainer : classes.tableContainer + ' ' + classes.hidden}>
-                <div className={classes.topArrowContainer}>
-                    <IconButton
-                        onClick={() => {
-                            setOpen(false);
-                        }}
-                    >
-                        <ExpandMoreIcon
-                            className={classes.arrowTop}
-                            color='action'
-                        />
-                    </IconButton>
-                </div>
-
                 <div id="table" ref={divRef}>
                     <DataTable
                         className={open ? classes.table : classes.table + ' ' + classes.minimizeTable}
-                        title="Рекомендательный сервис размещения парков"
+                        title={<CustomHeader title="Рекомендательный сервис размещения парков"/>}
                         columns={columns}
                         data={data}
                         pagination

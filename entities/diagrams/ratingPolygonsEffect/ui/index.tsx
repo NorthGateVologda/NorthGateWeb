@@ -13,7 +13,7 @@ const RatingPolygonsEffect = ({
         recommendation: number,
         rating: number
     }) => item.recommendation === 1 && item.rating !== 0);
-    const diagramWidth: number = 300;
+    const diagramWidth: number = 200;
     const diagramHeight: number = 350;
     return (
         <div className={classes.container}>

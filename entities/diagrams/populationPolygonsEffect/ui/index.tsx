@@ -13,7 +13,7 @@ const PopulationPolygonsEffect = ({
         recommendation: number,
         population: number
     }) => item.recommendation === 1 && item.population > 0);
-    const diagramWidth: number = 300;
+    const diagramWidth: number = 200;
     const diagramHeight: number = 350;
 
     return (

@@ -19,3 +19,9 @@
 .title {
     font-size: 14px;
 }
+
+@media (max-width: 1000px) {
+    .population {
+        font-size: 40px;
+    }
+}

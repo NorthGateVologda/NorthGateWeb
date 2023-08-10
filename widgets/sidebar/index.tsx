@@ -57,12 +57,14 @@ const Sidebar = ({
                             '& .MuiDrawer-paper': {
                                 display: 'flex',
                                 flexDirection: 'column',
-                                width: '35vw',
-                                boxSizing: 'border-box',
+                                width: 'fit-content',
                                 position: 'absolute',
                                 left: '0',
                                 zIndex: '1000',
                                 height: divHeight <= 180 ? '100%' : `calc(100% - ${divHeight}px)`
+                            },
+                            '@media (max-width: 1000px)': {
+                              height: divHeight <= 180 ? '100%' : `calc(100% - ${divHeight}px)`,
                             },
                         }}
                         variant="persistent"
